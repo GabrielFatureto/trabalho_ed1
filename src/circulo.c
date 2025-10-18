@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -77,6 +78,10 @@ void set_x_circulo(CIRCULO c, double x){
 
 void set_y_circulo(CIRCULO c, double y){
     ((Circle*)c)->y = y;
+}
+
+void set_r(CIRCULO c, double r){
+    ((Circle*)c)->r = r;
 }
 
 void set_corb(CIRCULO c, char* corb){

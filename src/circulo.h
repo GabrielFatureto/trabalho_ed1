@@ -94,6 +94,13 @@ void set_x_circulo(CIRCULO c, double x);
 void set_y_circulo(CIRCULO c, double y);
 
 /**
+ /// @brief Define o raio do círculo
+ /// @param c Ponteiro para a estrutura do círculo
+ /// @param r Novo raio do círculo
+ */
+void set_r(CIRCULO c, double r);
+
+/**
  /// @brief Define a cor da borda do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param corb Nova cor para a borda do círculo
