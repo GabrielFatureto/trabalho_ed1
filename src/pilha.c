@@ -3,7 +3,7 @@
 #include "pilha.h"
 
 
-typedef struct {
+typedef struct No{
     void* dado;       
     struct No* proximo;
 } No;
@@ -15,15 +15,16 @@ typedef struct {
 } Pilha;
 
 PILHA pilha_criar() {
-    PILHA p = (PILHA) malloc(sizeof(Pilha));
-    if (p != NULL) {
-        p->topo = NULL;
-        p->tamanho = 0;
+    Pilha* p_interno = (Pilha*) malloc(sizeof(Pilha));
+    if (p_interno != NULL) {
+        p_interno->topo = NULL;
+        p_interno->tamanho = 0;
     }
-    return p;
+    return (PILHA)p_interno;
 }
 
 bool pilha_empilhar(PILHA p, void* dado) {
+    Pilha* p_interno = (Pilha*) malloc(sizeof(Pilha));
     if (p == NULL) return false;
 
     No* novo_no = (No*) malloc(sizeof(No));
@@ -32,44 +33,48 @@ bool pilha_empilhar(PILHA p, void* dado) {
     }
 
     novo_no->dado = dado;
-    novo_no->proximo = p->topo; 
-    p->topo = novo_no;          
-    p->tamanho++;
+    novo_no->proximo = p_interno->topo; 
+    p_interno->topo = novo_no;          
+    p_interno->tamanho++;
 
     return true;
 }
 
 void* pilha_desempilhar(PILHA p) {
+    Pilha* p_interno = (Pilha*)p;
     if (p == NULL || pilha_esta_vazia(p)) {
         return NULL;
     }
 
-    No* no_removido = p->topo;
+    No* no_removido = p_interno->topo;
     void* dado_retornado = no_removido->dado;
 
-    p->topo = p->topo->proximo; 
+    p_interno->topo = p_interno->topo->proximo; 
 
     free(no_removido); 
-    p->tamanho--;
+    p_interno->tamanho--;
 
     return dado_retornado;
 }
 
 void* pilha_topo(PILHA p) {
-    if (p == NULL || pilha_esta_vazia(p)) {
+    Pilha* p_interno = (Pilha*)p;
+    if (p_interno == NULL || pilha_esta_vazia(p)) {
         return NULL;
     }
-    return p->topo->dado;
+    return p_interno->topo->dado;
 }
 
 int pilha_tamanho(PILHA p) {
-    if (p == NULL) return 0;
-    return p->tamanho;
+    Pilha* p_interno = (Pilha*)p;
+    if (p_interno == NULL) return 0;
+    return p_interno->tamanho;
 }
 
 bool pilha_esta_vazia(PILHA p) {
-    if (p == NULL) return true;
-    return p->tamanho == 0;
+    Pilha* p_interno = (Pilha*)p;
+    if (p_interno == NULL) return true;
+    return p_interno->tamanho == 0;
 }
 
 void destruir_pilha(PILHA p){

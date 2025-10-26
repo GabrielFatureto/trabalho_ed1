@@ -57,7 +57,7 @@ double get_r(CIRCULO c){
 }
 
 double get_area(CIRCULO c){
-    return pi * ((Circ*)c)->r * ((Circ*)c)->r;
+    return pi * ((Circle*)c)->r * ((Circle*)c)->r;
 }
 
 char* get_corb(CIRCULO c){

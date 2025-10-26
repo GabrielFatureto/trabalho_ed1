@@ -50,7 +50,7 @@ int pilha_tamanho(PILHA p);
  /// @param p Ponteiro para a Pilha  
  /// @return Retorna 'true' se a pilha estiver vazia, 'false' caso contrário
  */
-bool pilha_vazia(PILHA p);
+bool pilha_esta_vazia(PILHA p);
 
 /** 
  /// @brief Destroi a pilha e libera a memória alocada

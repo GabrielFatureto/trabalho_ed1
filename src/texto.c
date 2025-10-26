@@ -154,6 +154,10 @@ char* get_txt (TEXTO t){
     return ((Text*)t)->texto;
 }
 
+int get_tamanho_texto(TEXTO t) {
+    return strlen(((Text*)t)->texto);
+}
+
 void set_i_texto (TEXTO t, int id){
     ((Text*)t)->i = id;
 }

@@ -3,7 +3,7 @@
 #include "fila.h"
 
 
-typedef struct {
+typedef struct No{
     void* dado;      
     struct No* proximo;
 } No;
@@ -16,18 +16,19 @@ typedef struct {
 
 
 FILA fila_criar() {
-    Fila f = (FILA) malloc(sizeof(Fila));
+    Fila* f = (Fila*) malloc(sizeof(Fila));
     if (f != NULL) {
         f->frente = NULL;
         f->tras = NULL;
         f->tamanho = 0;
     }
-    return f;
+    return (FILA)f;
 }
 
 
 bool fila_enfileirar (FILA f, void* dado) {
-    if (f == NULL) return false;
+    Fila* f_interno = (Fila*)f;
+    if (f_interno == NULL) return false;
 
     No* novo_no = (No*) malloc(sizeof(No));
     if (novo_no == NULL) {
@@ -38,51 +39,55 @@ bool fila_enfileirar (FILA f, void* dado) {
     novo_no->proximo = NULL;
 
     if (fila_esta_vazia(f)) {
-        f->frente = novo_no;
-        f->tras = novo_no;
+        f_interno->frente = novo_no;
+        f_interno->tras = novo_no;
     } else {
-        f->tras->proximo = novo_no;
-        f->tras = novo_no;
+        f_interno->tras->proximo = novo_no;
+        f_interno->tras = novo_no;
     }
 
-    f->tamanho++;
+    f_interno->tamanho++;
     return true;
 }
 
 void* fila_desenfileirar(FILA f) {
-    if (f == NULL || fila_esta_vazia(f)) {
+    Fila* f_interno = (Fila*)f;
+    if (f_interno == NULL || fila_esta_vazia(f)) {
         return NULL;
     }
 
-    No* no_removido = f->frente;
+    No* no_removido = f_interno->frente;
     void* dado_retornado = no_removido->dado;
 
-    f->frente = f->frente->proximo;
+    f_interno->frente = f_interno->frente->proximo;
 
-    if (f->frente == NULL) {
-        f->tras = NULL;
+    if (f_interno->frente == NULL) {
+        f_interno->tras = NULL;
     }
 
-    f->tamanho--;
+    f_interno->tamanho--;
 
     return dado_retornado;
 }
 
 void* fila_frente(FILA f) {
-    if (f == NULL || fila_esta_vazia(f)) {
+    Fila* f_interno = (Fila*)f;
+    if (f_interno == NULL || fila_esta_vazia(f)) {
         return NULL;
     }
-    return f->frente->dado;
+    return f_interno->frente->dado;
 }
 
 int fila_tamanho(FILA f) {
-    if (f == NULL) return 0;
-    return f->tamanho;
+    Fila* f_interno = (Fila*)f;
+    if (f_interno == NULL) return 0;
+    return f_interno->tamanho;
 }
 
 bool fila_esta_vazia(FILA f) {
-    if (f == NULL) return true;
-    return f->tamanho == 0;
+    Fila* f_interno = (Fila*)f;
+    if (f_interno == NULL) return true;
+    return f_interno->tamanho == 0;
 }
 
 void destruir_fila(FILA f){

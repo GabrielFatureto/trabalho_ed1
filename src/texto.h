@@ -135,6 +135,13 @@ char get_a (TEXTO t);
  */
 char* get_txt (TEXTO t);
 
+/**
+ /// @brief Obtém o tamanho do conteúdo do texto
+ /// @param t Ponteiro para a estrutura TEXTO
+ /// @return Retorna o tamanho do conteúdo do texto
+ */
+int get_tamanho_texto(TEXTO t);
+
 
 /**
  /// @brief Define o identificador do texto

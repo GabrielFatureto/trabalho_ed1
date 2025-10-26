@@ -2,7 +2,8 @@
 #define GEO_H
  
 #include <stdio.h> 
-#include <stdlib.h>   
+#include <stdlib.h>  
+#include "fila.h" 
 
 FILA ler_geo (FILE* arqgeo);
 

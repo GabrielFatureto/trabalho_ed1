@@ -1,83 +1,226 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "disparador.h"
-#include "carregador.h"
-#include "pilha.h"
+#include "DISPARADOR.h"
+#include "CARREGADOR.h"
+#include "forma.h"
+#include "arena.h"
 #include "fila.h"
 
-typedef struct {
-    int i;
-    double x, y;
-    CARREGADOR car_esq;
-    CARREGADOR car_dir;
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct Disparador {
+	int i;
+	double x, y;
+	Forma *formaEmDisparo;
+	CARREGADOR *esq, *dir;
 } Disparador;
 
-DISPARADOR cria_disparador (int id, double x, double y) {
-    Disparador* d = (Disparador*)malloc(sizeof(Disparador));
-    if (d == NULL) {
-        printf("Erro ao tentar alocar memória para o disparador.\n");
-        exit(1);
+DISPARADOR *criaDisparador(int i, double x, double y, CARREGADOR *esq, CARREGADOR *dir) {
+	DISPARADOR *d = malloc (sizeof(DISPARADOR));
+	if (d == NULL) {
+		printf("Erro ao criar o DISPARADOR!\n");
+		return NULL;
+	}
+
+	d -> i = i;
+	d -> x = x;
+	d -> y = y;
+	d -> esq = esq;
+	d -> dir = dir;
+	d -> formaEmDisparo = NULL;
+
+	printf("Disparador %i criado com sucesso!\n", d -> i);
+
+	return d;
+
+}
+
+int getIDDISPARADOR(DISPARADOR *d) {
+	return d -> i;
+}
+
+void posicionaDisparador(DISPARADOR *d, double x, double y) {
+	if (d == NULL) {
+		printf("Disparador nulo passado para a função de posicionamento!\n");
+		return;
+	}
+
+	d -> x = x;
+	d -> y = y;
+
+}
+
+void attachDisparador(DISPARADOR *d, CARREGADOR *esq, CARREGADOR *dir) {
+	if (d == NULL) {
+		printf("Disparador NULL foi passado para a função attachDisparador!\n");
+		return;
+	}
+
+	if (esq == NULL || dir == NULL) {
+		printf("CARREGADOR NULL passado para a funcao attachDisparador!\n");
+		return;
+	}
+
+
+	d -> esq = esq;
+	d -> dir = dir;
+
+	d -> formaEmDisparo = NULL;
+
+}
+
+forma* shiftDisparador(DISPARADOR *d, char botao, int n) {
+    if (d == NULL || n < 0) {
+        return NULL;
     }
-    d->id = id;
-    d->x = x;
-    d->y = y;
-    return d;
-}
 
-void pd (DISPARADOR d, double x, double y) {
-    ((Disparador*)d)->x = x;
-    ((Disparador*)d)->y = y;
-}
+    forma *forma_anterior = d->formaEmDisparo;
 
-void atch (DISPARADOR d, CARREGADOR car_esq, CARREGADOR car_dir) {
-    ((Disparador*)d)->car_esq = car_esq;
-    ((Disparador*)d)->car_dir = car_dir;
-}
+    for (int i = 0; i < n; i++) {
+        switch (botao) {
+            case 'd': {
 
-void shft (DISPARADOR d, char lado, int n) {
-    if (lado == 'd') { 
-        if (((Disparador*)d)->pd != NULL) {
-            pilha_empilhar (((Disparador*)d)->car_esq, ((Disparador*)d)->pd);
-        }
-        ((Disparador*)d)->pd = get_conteudo_pilha (((Disparador*)d)->car_dir);
-        pilha_desempilhar (((Disparador*)d)->car_dir);
-        for (int i = 0; i < n-1; i++) {
-            pilha_empilhar (((Disparador*)d)->car_esq, ((Disparador*)d)->pd);
-            ((Disparador*)d)->pd = get_conteudo_pilha (((Disparador*)d)->car_dir);
-            pilha_desempilhar (((Disparador*)d)->car_dir);
+                if (forma_anterior != NULL) {
+                    adicionaFormaCARREGADOR(d->dir, forma_anterior);
+                    forma_anterior = NULL;
+                }
+
+                if (CARREGADOREstaVazio(d -> esq)) {
+                    d->formaEmDisparo = NULL;
+                    return NULL;
+                }
+
+                forma_anterior = removeDoCARREGADOR(d -> esq);
+                d->formaEmDisparo = forma_anterior;
+                break;
+            }
+
+            case 'e': {
+
+                if (forma_anterior != NULL) {
+                    adicionaFormaCARREGADOR(d->esq, forma_anterior);
+                    forma_anterior = NULL;
+                }
+
+                if (CARREGADOREstaVazio(d -> dir)) {
+                    d->formaEmDisparo = NULL;
+                    return NULL;
+                }
+
+                forma_anterior = removeDoCARREGADOR(d -> dir);
+                d->formaEmDisparo = forma_anterior;
+                break;
+            }
+
+            default: {
+                return NULL;
+            }
         }
     }
-    if (lado == 'e') {
-        if (((Disparador*)d)->pd != NULL) {
-            pilha_empilhar (((Disparador*)d)->car_dir, ((Disparador*)d)->pd);
-        }
-        ((Disparador*)d)->pd = pilha_topo (((Disparador*)d)->car_esq);
-        pilha_desempilhar (((Disparador*)d)->car_esq);
-        for (int i = 0; i < n-1; i++) {
-            insere_pilha (((Disparador*)d)->car_dir, ((Disparador*)d)->pd);
-            ((Disparador*)d)->pd = pilha_topo (((Disparador*)d)->car_esq);
-            pilha_desempilhar (((Disparador*)d)->car_esq);
-        }
-    } else {
-        printf ("ERRO. Não foi possível identifical qual botão deveria ser apertado.\n");
-        exit(1);
-    }
+
+
+    return forma_anterior;
 }
 
-void dsp (DISPARADOR d, double dx, double dy) {
-    ((Disparador*)d)->pd->x = ((Disparador*)d)->x + dx;
-    ((Disparador*)d)->pd->y = ((Disparador*)d)->y + dy;
-    fila_enfileirar (arena, ((Disparador*)d)->pd);
-    ((Disparador*)d)->pd = NULL;
+
+forma *disparaDisparador(DISPARADOR *d, double dx, double dy) {
+	if (d == NULL) {
+		printf("Disparador inexistente passado para a função disparaDisparador!\n");
+		return NULL;
+	}
+
+
+	if (d -> formaEmDisparo == NULL) {
+		printf("Nenhuma forma está na posição de disparo!\n");
+		return NULL;
+	}
+
+	forma *formaDisparada = d -> formaEmDisparo;
+	d -> formaEmDisparo = NULL;
+
+	double x_DISPARADOR = getXDISPARADOR(d);
+	double y_DISPARADOR = getYDISPARADOR(d);
+
+	double posicaoFinalX = dx + x_DISPARADOR;
+	double posicaoFinalY = dy + y_DISPARADOR;
+
+	setPosicaoForma(formaDisparada, posicaoFinalX, posicaoFinalY);
+
+
+	return formaDisparada;
+
 }
 
-double get_x_disparador (DISPARADOR d) {
-    return ((Disparador*)d)->x;
+fila *rajadaDisparador(DISPARADOR *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
+	if (d == NULL || a == NULL) {
+		return NULL;
+	}
+
+	double x_original = getXDISPARADOR(d);
+	double y_original = getYDISPARADOR(d);
+
+	fila *fila_disparos = criaFila();
+	int formas_disparadas = 0;
+
+
+	for (int i = 0; ; i++) {
+
+		forma *formaAtual = shiftDisparador(d, botao, 1);
+		if (formaAtual == NULL) {
+			break;
+		}
+
+		double dx_atual = dx + (i * ix);
+		double dy_atual = dy + (i * iy);
+
+		forma *formaDisparada = disparaDisparador(d, dx_atual, dy_atual);
+
+		if (formaDisparada != NULL) {
+
+			adicionaFormaArena(a, formaDisparada);
+			enqueue(fila_disparos, formaDisparada);
+			formas_disparadas++;
+		}
+	}
+
+	posicionaDisparador(d, x_original, y_original);
+
+	return fila_disparos;
 }
 
-double get_y_disparador (DISPARADOR d) {
-    return ((Disparador*)d)->y;
+
+forma *getFormaEmDisparo(DISPARADOR *d) {
+	if (d == NULL || d -> formaEmDisparo == NULL) {
+		return NULL;
+	}
+
+	return d -> formaEmDisparo;
 }
 
-void libera_memoria_disparador (DISPARADOR d) {}
+double getXDISPARADOR(DISPARADOR *d) {
+	return d -> x;
+}
+
+double getYDISPARADOR(DISPARADOR *d) {
+	return d -> y;
+}
+
+void limpaFormaDoDisparador(DISPARADOR *d, forma *f) {
+	if (d == NULL || f == NULL) {
+		return;
+	}
+
+	if (d -> formaEmDisparo == f) {
+		d -> formaEmDisparo = NULL;
+	}
+}
+
+
+void destrutorDisparador(DISPARADOR **ptr_DISPARADOR) {
+	if (ptr_DISPARADOR == NULL || *ptr_DISPARADOR == NULL) return;
+
+	DISPARADOR* d = *ptr_DISPARADOR;
+
+	free(d);
+	*ptr_DISPARADOR = NULL;
+}

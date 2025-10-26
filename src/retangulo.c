@@ -21,19 +21,19 @@ RETANGULO cria_retangulo(int i, double x, double y, double w, double h, char* co
     r->w = w;
     r->h = h;
 
-    c->corb = (char*)malloc(strlen(corb)+1);
-    if(c->corb == NULL){
+    r->corb = (char*)malloc(strlen(corb)+1);
+    if(r->corb == NULL){
         printf("Erro na alocação de memória!!\n");
         exit(1);
     }
-    strcpy(c->corb, corb);
+    strcpy(r->corb, corb);
 
-    c->corp = (char*)malloc(strlen(corp)+1);
-    if(c->corp == NULL){
+    r->corp = (char*)malloc(strlen(corp)+1);
+    if(r->corp == NULL){
         printf("Erro na alocação de memória!!\n");
         exit(1);
     }
-    strcpy(c->corp, corp);
+    strcpy(r->corp, corp);
 
     return (RETANGULO) r;
 }
@@ -51,7 +51,7 @@ double get_y_retangulo (RETANGULO r){
 }
 
 double get_w (RETANGULO r){
-    return ((Rectangle*)r)->h;
+    return ((Rectangle*)r)->w;
 }
 
 double get_h (RETANGULO r){

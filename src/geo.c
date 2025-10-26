@@ -9,9 +9,10 @@
 #include "retangulo.h"
 #include "linha.h"
 #include "texto.h"
+#include "svg.h"
 
 
-#define MAX_SIZE 1024;
+#define MAX_SIZE 1024
 
 
 FILA ler_geo (FILE* arqgeo){
@@ -24,10 +25,16 @@ FILA ler_geo (FILE* arqgeo){
     int i;
     char corb[20], corp[20], cor[20], comando[10];
 
+    char aux[MAX_SIZE];     
+    char txt[MAX_SIZE];     
+    char a;                 
+    char fFamily[50];       
+    char fWeight[50];       
+    char fSize[20];
+
     ESTILO e = criar_estilo("sans", "b", "12px");
 
-    char linha[MAX_SIZE];
-    char temp[MAX_SIZE];
+    char linha [MAX_SIZE];
 
     while(fgets(linha, MAX_SIZE, arqgeo)){
         linha[strcspn(linha, "\r\n")] = '\0';
@@ -78,5 +85,6 @@ FILA ler_geo (FILE* arqgeo){
         fechar_SVG(svg);
     }
 
+    return f;
 
 }
