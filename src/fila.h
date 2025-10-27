@@ -7,7 +7,7 @@
 
 typedef void* FILA;
 
-
+typedef struct No No;
 
 /**
  /// @brief Cria e inicializa uma nova fila vazia.
@@ -51,10 +51,25 @@ int fila_tamanho(FILA f);
  */
 bool fila_esta_vazia(FILA f);
 
+
+/** 
+ /// @brief Obtém o proximo nó na fila.
+ /// @param no_atual Nó do qual o dado será obtido.
+ /// @return Retorna um ponteiro para o próximo nó, ou NULL se o nó for NULL.
+ */ 
+No* getProxNode(No* no_atual);
+
+/** 
+ /// @brief Obtém o dado armazenado em um nó da fila.
+ /// @param no_atual Nó do qual o dado será obtido.
+ /// @return Retorna um ponteiro para o dado armazenado no nó, ou NULL se o nó for NULL.
+ */
+void* getItemNode(No* no_atual);
+
 /** 
  /// @brief Destroi a fila e libera a memória alocada
  /// @param f Ponteiro para a fila a ser destruída
  */ 
-void destruir_fila(FILA f);
+void destruir_fila(FILA f, void (*excluir_dado)(void*));
 
 #endif

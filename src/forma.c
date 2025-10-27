@@ -8,6 +8,8 @@
 #include "texto.h"
 #include "disparador.h"
 #include "pilha.h"
+#include "fila.h"
+#include "svg.h"
 
 typedef struct {
     FORMA geometrica;
@@ -60,8 +62,9 @@ FORMA cria_Forma_texto (char tipo, int id, double x, double y, char *corb, char 
     return ((Forma*)F);
 }
 
-void *getFormaDados(forma *f) {
-	return f -> dados;
+void *getFormaDados(FORMA f) {
+    Forma *F = (Forma*)malloc(sizeof(Forma));
+	return F -> dados;
 }
 
 char get_tipo_Forma (FORMA F) {
@@ -96,6 +99,81 @@ int get_id_Forma (FORMA F) {
     
     // Se chegar aqui, o tipo é desconhecido
     return -1; 
+}
+
+void escreveDadosFormaTxt(FORMA *f, FILE *txt, char *reportDaFuncaoQRY) {
+    tipoForma tipo = getTipoForma(f);
+    void* dados = getFormaDados(f);
+
+    const char* report_safe = (reportDaFuncaoQRY != NULL) ? reportDaFuncaoQRY : "";
+
+    switch (tipo) {
+        case circulo: {
+            fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                get_id_forma(f),
+                get_x_circulo(dados),
+                get_y_circulo(dados),
+                get_r(dados),
+                get_corb(dados),
+                get_corp(dados));
+            break;
+        }
+
+        case retangulo: {
+            fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                get_id_forma(f),
+                get_x_retangulo(dados),
+                get_y_retangulo(dados),
+                get_w(dados),
+                get_h(dados),
+                get_corb(dados),
+                get_corp(dados));
+            break;
+        }
+
+        case linha: {
+            fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
+                report_safe,
+                get_id_forma(f),
+                get_x1_linha(dados),
+                get_y1_linha(dados),
+                get_x2_linha(dados),
+                get_y2_linha(dados),
+                get_cor_linha(dados));
+            break;
+        }
+
+        case texto: {
+            TEXTO* t = (TEXTO*)dados;
+            ESTILO* e = getEstiloTexto(t);
+
+            fprintf(txt, "%s Texto\n ID: %d\n Âncora em: (%.2f, %.2f)\n Posição da Âncora: %c\n Conteúdo: \"%s\"\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                get_id_forma(f),
+                get_x_texto(t),
+                get_y_texto(t),
+                get_a(t),
+                get_txt(t),
+                get_corb_texto(dados),
+                get_corp_texto(dados));
+
+            if (e != NULL) {
+                fprintf(txt, " Família da fonte: %s\n Peso da fonte: %s\n Tamanho da fonte: %s\n\n",
+                    get_fFamily(e),
+                    get_fWeight(e),
+                    get_fSize(e));
+            } else {
+                fprintf(txt, "\n");
+            }
+            break;
+        }
+
+        default:
+            fprintf(txt, "Tipo de forma desconhecida!\n");
+            break;
+    }
 }
 
 char* get_corb_Forma (FORMA F) {
@@ -213,6 +291,31 @@ double get_y_Forma(FORMA F){
     else if (((Forma*)F)->tipo == 't') {
         return get_y_texto (( ((Forma*)F)->geometrica) );
     }
+}
+
+void desenhaFormaSvg(FORMA f, FILE *svg) {
+	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
+
+	switch (tipo) {
+		case circulo: {
+			insereCirculo(svg, (CIRCULO)dados); break;
+		}
+
+		case retangulo: {
+			insereRetangulo(svg, (RETANGULO)dados); break;
+		}
+
+		case linha: {
+			insereLinha(svg, (LINHA)dados); break;
+		}
+
+		case texto: {
+			insereTexto(svg, (TEXTO)dados); break;
+		}
+
+		default: break;
+	}
 }
 
 void excluir_Forma (FORMA F) {

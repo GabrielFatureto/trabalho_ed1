@@ -2,6 +2,7 @@
 #define FORMA_H
 
 #include "texto.h"
+#include "svg.h"
 
 
 typedef void* FORMA;
@@ -122,6 +123,13 @@ char* get_corp_Forma (FORMA F);
  /// @return A área (double). (Retorna 0.0 para formas sem área, como Linha ou Texto).
  */
 double get_area_Forma (FORMA F);
+
+/**
+ /// @brief Desenha a forma no arquivo SVG fornecido.
+ /// @param f Ponteiro para a Forma.
+ /// @param svg Arquivo SVG aberto para escrita.
+ */
+void desenhaFormaSvg(FORMA f, FILE *svg);
 
 /**
  /// @brief Libera toda a memória associada à Forma.

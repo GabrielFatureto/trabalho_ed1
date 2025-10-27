@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "linha.h"
 
 typedef struct {
     int i;
     double x1, y1, x2, y2;
     char *cor;
+    bool eh_pontilhada;
 } Line;
 
 LINHA cria_linha(int i, double x1, double y1, double x2, double y2, char* cor) {
@@ -53,6 +55,10 @@ double get_y2_linha (LINHA l){
 
 char* get_cor_linha (LINHA l){
     return ((Line*)l)->cor;
+}
+
+bool getEh_pontilhada(LINHA l) {
+	return ((Line*)l)-> eh_pontilhada;
 }
 
 void set_x1_linha (LINHA l, double x1){

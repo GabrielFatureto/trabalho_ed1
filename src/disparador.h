@@ -4,7 +4,8 @@
 #include "carregador.h"
 #include "forma.h"
 #include "arena.h"
-#include "processaQry.h"
+#include "qry.h"
+#include "fila.h"
 
 
 /* ------- TAD DISPARADOR -------
@@ -14,7 +15,7 @@
  * coordenadas (x, y) de onde os disparos se originam;
  * Carregadores: Contém dois ponteiros para carregadores (esquerdo e direito),
  * que funcionam como fontes de munição (formas) para o disparador;
- * Posição de Disparo: Um espaço que armazena a única forma que está
+ * Posição de Disparo: Um espaço que armazena a única FORMA que está
  * atualmente pronta para ser disparada. Esta posição é preenchida pela
  * função 'shiftDisparador' e esvaziada pela 'disparaDisparador'.
  */
@@ -56,33 +57,33 @@ void attachDisparador(DISPARADOR *d, CARREGADOR *dir, CARREGADOR *esq);
 /// @param d: Disparador onde a carga será colocada.
 /// @param botao: Define qual lado do disparador será apertado.
 /// @param n: Número de vezes em que o botão será apertado.
-/// @return: Retorna um ponteiro para a forma que ficou no ponto de disparo.
+/// @return: Retorna um ponteiro para a FORMA que ficou no ponto de disparo.
 /// Caso o usuário tenha apertado o botão a ponto de acabar com todas as formas
 /// que estão no CARREGADOR selecionado, retorna NULL;
-forma *shiftDisparador(DISPARADOR *d, char botao, int n);
+FORMA *shiftDisparador(DISPARADOR *d, char botao, int n);
 
-/// @brief: Dispara a forma que estava no disparador.
+/// @brief: Dispara a FORMA que estava no disparador.
 /// @param d: Posição do disparador.
-/// @param dx: Distância em coordenada x em que a forma será disparada na arena.
-/// @param dy: Distância em coordenada y em que a forma será disparada na arena.
-/// @return: Retorna um ponteiro para a forma disparada.
-forma *disparaDisparador(DISPARADOR *d, double dx, double dy);
+/// @param dx: Distância em coordenada x em que a FORMA será disparada na arena.
+/// @param dy: Distância em coordenada y em que a FORMA será disparada na arena.
+/// @return: Retorna um ponteiro para a FORMA disparada.
+FORMA *disparaDisparador(DISPARADOR *d, double dx, double dy);
 
-/// @brief: Dispara uma rajada de formas na arena, nas posições dx, dy, na forma
+/// @brief: Dispara uma rajada de formas na arena, nas posições dx, dy, na FORMA
 /// ((dx + (i * ix))) e ((dy + (i * iy))).
 /// @param d: Disparador que será utilizado.
 /// @param botao: Define qual lado do disparador será utilizado.
-/// @param dx: Distância em coordenada x em que a forma será disparada.
-/// @param dy: Distância em coordenada y em que a forma será disparada.
+/// @param dx: Distância em coordenada x em que a FORMA será disparada.
+/// @param dy: Distância em coordenada y em que a FORMA será disparada.
 /// @param ix: Valor a ser multiplicado com o iterador e acrescentado ao deslocamento dx.
 /// @param iy: Valor a ser multiplicado com o iterador e acrescentado ao deslocamento dy.
 /// @param a: Arena aonde as formas serão disparadas.
-fila *rajadaDisparador(DISPARADOR *d, char botao, double dx, double dy, double ix, double iy, arena *a);
+FILA *rajadaDisparador(DISPARADOR *d, char botao, double dx, double dy, double ix, double iy, arena *a);
 
-/// @brief: Pega a forma que está em posição de disparo.
-/// @param d: Ponteiro para o disparador que contém a forma.
-/// @return: Retorna um ponteiro para a forma que está na posição de disparo.
-forma *getFormaEmDisparo(DISPARADOR *d);
+/// @brief: Pega a FORMA que está em posição de disparo.
+/// @param d: Ponteiro para o disparador que contém a FORMA.
+/// @return: Retorna um ponteiro para a FORMA que está na posição de disparo.
+FORMA *getFormaEmDisparo(DISPARADOR *d);
 
 /// @brief: Pega a coordenada x da posição do disparador.
 /// @param d: Ponteiro para o disparador.
@@ -98,9 +99,9 @@ double getYdisparador(DISPARADOR *d);
 /// @param d: Ponteiro para o disparador a ser destruído.
 void destrutorDisparador(DISPARADOR **d);
 
-/// @brief: Limpa a forma em posição de disparo de um disparador específico
+/// @brief: Limpa a FORMA em posição de disparo de um disparador específico
 /// @param d: Disparador
-/// @param forma: Forma a ser removida (se estiver em posição de disparo)
-void limpaFormaDoDisparador(DISPARADOR *d, forma *forma);
+/// @param FORMA: Forma a ser removida (se estiver em posição de disparo)
+void limpaFormaDoDisparador(DISPARADOR *d, FORMA *FORMA);
 
 #endif //DISPARADOR_H

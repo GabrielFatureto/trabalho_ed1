@@ -84,7 +84,7 @@ void set_fSize (ESTILO e, char* fSize);
  /// @param txt Conteúdo do texto
  /// @return Retorna um ponteiro para a estrutura TEXTO criada
  */
-TEXTO criarTexto (int i, double x, double y, char* corb, char* corp, char a, char* txt);
+TEXTO criarTexto (int i, double x, double y, char* corb, char* corp, char a, char* txt, ESTILO e);
 
 /**  
  /// @brief Obtém o identificador do texto
@@ -92,6 +92,13 @@ TEXTO criarTexto (int i, double x, double y, char* corb, char* corp, char a, cha
  /// @return Retorna o identificador do texto
  */
 int get_i_texto (TEXTO t);
+
+/**
+ /// @brief 
+ /// @param t 
+ /// @return 
+ */
+ESTILO getEstiloTexto(TEXTO t);
 
 /** 
  /// @brief Obtém a coordenada x da âncora do texto

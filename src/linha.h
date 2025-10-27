@@ -1,6 +1,8 @@
 #ifndef linha_h
 #define linha_h
 
+#include <stdbool.h>
+
 typedef void* LINHA;
 
 /*
@@ -64,6 +66,13 @@ double get_y2_linha (LINHA l);
  /// @return Retorna a cor da linha
  */
 char* get_cor_linha (LINHA l);
+
+/**
+ /// @brief Verifica se a linha é pontilhada
+ /// @param l Ponteiro para a estrutura da linha
+ /// @return Retorna true se a linha for pontilhada, false caso contrário
+ */
+bool getEh_pontilhada(LINHA l);
 
 /**
  /// @brief Define o valor da coordenada x1 da linha

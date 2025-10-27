@@ -11,6 +11,7 @@ typedef struct {
     char* corp;
     char a;
     char* texto;
+    ESTILO e;
 } Text;
 
 typedef struct {
@@ -91,7 +92,7 @@ void set_fSize (ESTILO e, char* fSize){
 }
 
 
-TEXTO criarTexto(int i, double x, double y, char* corb, char* corp, char a, char* texto) {
+TEXTO criarTexto(int i, double x, double y, char* corb, char* corp, char a, char* texto, ESTILO e) {
     Text* t = (Text*)malloc(sizeof(Text));
     if(t == NULL){
         printf("Erro na alocação de memória!!\n");
@@ -123,11 +124,18 @@ TEXTO criarTexto(int i, double x, double y, char* corb, char* corp, char a, char
         exit(1);
     }
     strcpy(t->texto, texto);
+
+    t->e = e;
+
     return t;
 }
 
 int get_i_texto (TEXTO t){
     return ((Text*)t)->i;
+}
+
+ESTILO getEstiloTexto(TEXTO t) {
+	return ((Text*)t)->e;
 }
 
 double get_x_texto (TEXTO t){

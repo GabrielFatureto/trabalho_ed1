@@ -84,15 +84,32 @@ int fila_tamanho(FILA f) {
     return f_interno->tamanho;
 }
 
+No* getProxNode(No* no_atual) {
+    if (no_atual == NULL) {
+        return NULL;
+    }
+    return no_atual->proximo;
+}
+
+void* getItemNode(No* no_atual) {
+    if (no_atual == NULL) {
+        return NULL;
+    }
+    return no_atual->dado;
+}
+
 bool fila_esta_vazia(FILA f) {
     Fila* f_interno = (Fila*)f;
     if (f_interno == NULL) return true;
     return f_interno->tamanho == 0;
 }
 
-void destruir_fila(FILA f){
-    while(!fila_esta_vazia(f)){
-        fila_desenfileirar(f);
+void destruir_fila(FILA f, void (*excluir_dado)(void*)) {
+    while (!fila_esta_vazia(f)) {
+        void* dado = fila_desenfileirar(f); // Pega o dado
+        if (excluir_dado != NULL) {
+            excluir_dado(dado); // Libera o dado
+        }
     }
-    free(f);
+    free(f); // Libera a fila
 }
