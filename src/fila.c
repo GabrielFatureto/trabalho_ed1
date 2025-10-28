@@ -104,12 +104,9 @@ bool fila_esta_vazia(FILA f) {
     return f_interno->tamanho == 0;
 }
 
-void destruir_fila(FILA f, void (*excluir_dado)(void*)) {
-    while (!fila_esta_vazia(f)) {
-        void* dado = fila_desenfileirar(f); // Pega o dado
-        if (excluir_dado != NULL) {
-            excluir_dado(dado); // Libera o dado
-        }
+void destruir_fila(FILA f){
+    while(!fila_esta_vazia(f)){
+        fila_desenfileirar(f);
     }
-    free(f); // Libera a fila
+    free(f);
 }

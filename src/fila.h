@@ -70,6 +70,6 @@ void* getItemNode(No* no_atual);
  /// @brief Destroi a fila e libera a memória alocada
  /// @param f Ponteiro para a fila a ser destruída
  */ 
-void destruir_fila(FILA f, void (*excluir_dado)(void*));
+void destruir_fila(FILA f);
 
 #endif

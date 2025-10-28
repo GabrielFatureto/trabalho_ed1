@@ -10,6 +10,8 @@ typedef void* ESTILO;
  família da fonte (fFamily), peso da fonte (fWeight) e tamanho da fonte (fSize). 
 */
 
+typedef struct Text Text;
+typedef struct Stile Stile;
 
 /*
 --------------------------------------------------- Funções de Estilo ---------------------------------------------------
@@ -24,6 +26,13 @@ typedef void* ESTILO;
  /// @return Um ponteiro para a estrutura ESTILO criada
  */
 ESTILO criar_estilo (char* fFamily, char* fWeight, char* fSize);
+
+/**
+ /// @brief Cria uma cópia de um estilo de texto existente
+ /// @param original Ponteiro para a estrutura ESTILO original
+ /// @return Retorna um ponteiro para a nova estrutura ESTILO criada como cópia
+ */
+ESTILO criaCopiaEstilo(Stile *original);
 
 /**
  /// @brief Obtém a font-Family do estilo de texto

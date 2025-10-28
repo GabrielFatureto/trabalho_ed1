@@ -23,7 +23,7 @@ typedef void* LINHA;
  /// @param cor Cor da linha
  /// @return Retorna a linha criada pelos parâmetros fornecidos
  */
-LINHA cria_linha(int i, double x1, double y1, double x2, double y2, char* cor);
+LINHA cria_linha(int i, double x1, double y1, double x2, double y2, char* cor, bool eh_pontilhada);
 
 /**
  /// @brief Obtém o identificador da forma 

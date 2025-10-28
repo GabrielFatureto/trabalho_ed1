@@ -67,7 +67,7 @@ FORMA cria_Forma_linha (char tipo, int id, double x1, double y1, double x2, doub
  /// @param ts Estilo do texto (definido em texto.h).
  /// @return Um ponteiro FORMA para o wrapper criado.
  */
-FORMA cria_Forma_texto (char tipo, int id, double x, double y, char *corb, char *corp, char a, char *txto, ESTILO ts);
+FORMA cria_Forma_texto (TEXTO t);
 
 
 /// @brief Obtém os dados internos da forma encapsulada.
@@ -130,6 +130,34 @@ double get_area_Forma (FORMA F);
  /// @param svg Arquivo SVG aberto para escrita.
  */
 void desenhaFormaSvg(FORMA f, FILE *svg);
+
+/**
+ /// @brief Calcula a cor complementar de uma cor hexadecimal.
+ /// @param cor_hexa_original String da cor hexadecimal (ex: "#ff5733" ou "ff5733").
+ /// @return String alocada dinamicamente com a cor complementar em hexadecimal.
+ */
+char *getCorComplementar(char *cor_hexa_original);
+
+/**
+ /// @brief Define a cor de preenchimento da forma.
+ /// @param f Ponteiro para a Forma.
+ /// @param novaCor String da nova cor de preenchimento.
+ */
+void setCorpFormas(FORMA *f, char *novaCor);
+
+/**
+ /// @brief Define a cor de borda da forma.
+ /// @param f Ponteiro para a Forma.
+ /// @param novaCor String da nova cor de borda.
+ */
+void setCorbFormas(FORMA *f, char *novaCor);
+
+/**
+ /// @brief Clona uma Forma, criando uma cópia independente.
+ /// @param f_original Ponteiro para a Forma original.
+ /// @return Ponteiro para a nova Forma clonada.
+ */
+FORMA *clonarForma(FORMA *f_original);
 
 /**
  /// @brief Libera toda a memória associada à Forma.

@@ -122,13 +122,13 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, FILA *anotacoes_s
                 ESTILO *estilo_asterisco = criar_estilo("sans-serif", "bold", "30px");
                 TEXTO* asterisco = criarTexto(-1, x_esmagada, y_esmagada, "red", "black", 'm', "*", estilo_asterisco);
                 excluir_estilo(estilo_asterisco);
-                fila_enfileirar(anotacoes_svg, cria_Forma_texto(-1, TEXTO, asterisco));
+                fila_enfileirar(anotacoes_svg, cria_Forma_texto(asterisco));
 
                 *pontuacao_total += area_I;
                 area_esmagada_round += area_I;
                 if (formas_esmagadas != NULL) (*formas_esmagadas)++;
 
-                destrutorForma(forma_I);
+                excluir_Forma(forma_I);
                 adicionaNoChao(c, forma_J);
             }
             else if (area_I >= area_J) {
@@ -139,8 +139,8 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, FILA *anotacoes_s
 
                 FORMA *clone_I = NULL;
 
-                if (getTipoForma(forma_I) == linha) {
-                    char *corLinha = getCorLinha(getFormaDados(forma_I));
+                if (get_tipo_Forma(forma_I) == linha) {
+                    char *corLinha = get_cor_linha(getFormaDados(forma_I));
                     char *cor_complementar_linha = getCorComplementar(corLinha);
 
                     setCorbFormas(forma_J, cor_complementar_linha);

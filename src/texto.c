@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "texto.h"
 
-typedef struct {
+typedef struct Text{
     int i;
     double x, y;
     char* corb;
@@ -14,7 +14,7 @@ typedef struct {
     ESTILO e;
 } Text;
 
-typedef struct {
+typedef struct Stileq{
     char* fFamily;
     char* fWeight;
     char* fSize;
@@ -49,6 +49,14 @@ ESTILO criar_estilo (char* fFamily, char* fWeight, char* fSize) {
     strcpy(e->fSize, fSize);
 
     return (ESTILO) e;
+}
+
+ESTILO criaCopiaEstilo(Stile *original) {
+	if (original == NULL) {
+		return NULL;
+	}
+
+	return criar_estilo(original -> fFamily, original -> fWeight, original -> fSize);
 }
 
 char* get_fFamily (ESTILO e){
