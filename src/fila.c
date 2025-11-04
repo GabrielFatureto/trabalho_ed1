@@ -1,112 +1,166 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "fila.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "forma.h"
+
+typedef struct nodeF {
+	void *item;
+	nodeF *prox;
+}nodeF;
+
+typedef struct fila {
+	nodeF *inicio;
+	nodeF *fim;
+	int tam;
+}fila;
 
 
-typedef struct No{
-    void* dado;      
-    struct No* proximo;
-} No;
+fila *criaFila(void) {
+	fila *f = malloc (sizeof(fila));
+	if (!f) {
+		printf("Erro ao criar a fila!\n");
+		return NULL;
+	}
 
-typedef struct {
-    No* frente;      
-    No* tras;        
-    int tamanho;
-} Fila;
+	f -> inicio = NULL;
+	f -> fim = NULL;
+	f -> tam = 0;
 
+	return f;
 
-FILA fila_criar() {
-    Fila* f = (Fila*) malloc(sizeof(Fila));
-    if (f != NULL) {
-        f->frente = NULL;
-        f->tras = NULL;
-        f->tamanho = 0;
-    }
-    return (FILA)f;
 }
 
-
-bool fila_enfileirar (FILA f, void* dado) {
-    Fila* f_interno = (Fila*)f;
-    if (f_interno == NULL) return false;
-
-    No* novo_no = (No*) malloc(sizeof(No));
-    if (novo_no == NULL) {
-        return false; 
-    }
-
-    novo_no->dado = dado;
-    novo_no->proximo = NULL;
-
-    if (fila_esta_vazia(f)) {
-        f_interno->frente = novo_no;
-        f_interno->tras = novo_no;
-    } else {
-        f_interno->tras->proximo = novo_no;
-        f_interno->tras = novo_no;
-    }
-
-    f_interno->tamanho++;
-    return true;
+int getTamFila(fila *f) {
+	return f -> tam;
 }
 
-void* fila_desenfileirar(FILA f) {
-    Fila* f_interno = (Fila*)f;
-    if (f_interno == NULL || fila_esta_vazia(f)) {
-        return NULL;
-    }
+bool estaVaziaFila(fila *f) {
+	if (f -> tam == 0) {
+		return true;
+	}
 
-    No* no_removido = f_interno->frente;
-    void* dado_retornado = no_removido->dado;
-
-    f_interno->frente = f_interno->frente->proximo;
-
-    if (f_interno->frente == NULL) {
-        f_interno->tras = NULL;
-    }
-
-    f_interno->tamanho--;
-
-    return dado_retornado;
+	return false;
 }
 
-void* fila_frente(FILA f) {
-    Fila* f_interno = (Fila*)f;
-    if (f_interno == NULL || fila_esta_vazia(f)) {
-        return NULL;
-    }
-    return f_interno->frente->dado;
+void enqueue(fila *f, void *item) {
+	nodeF *novo = malloc(sizeof(nodeF));
+	if (!novo) {
+		perror("malloc nodeF");
+		exit(1);
+	}
+
+
+	novo -> item = item;
+	novo -> prox = NULL;
+
+	if (estaVaziaFila(f)) {
+		f -> inicio = novo;
+		f -> fim = novo;
+	}
+
+	else {
+		f -> fim -> prox = novo;
+		f -> fim = novo;
+
+	}
+
+	f -> tam++;
 }
 
-int fila_tamanho(FILA f) {
-    Fila* f_interno = (Fila*)f;
-    if (f_interno == NULL) return 0;
-    return f_interno->tamanho;
+nodeF *getInicioFila(fila *f) {
+	if (estaVaziaFila(f)) {
+		return NULL;
+	}
+
+	return f -> inicio;
 }
 
-No* getProxNode(No* no_atual) {
-    if (no_atual == NULL) {
-        return NULL;
-    }
-    return no_atual->proximo;
+nodeF *getFimFila(fila *f) {
+	if (estaVaziaFila(f)) {
+		return NULL;
+	}
+
+	return f -> fim;
 }
 
-void* getItemNode(No* no_atual) {
-    if (no_atual == NULL) {
-        return NULL;
-    }
-    return no_atual->dado;
+void *dequeue(fila *f) {
+	if (estaVaziaFila(f)) {
+		return NULL;
+	}
+
+	nodeF *remover = f -> inicio;
+	void *retorno = f -> inicio -> item;
+	f -> inicio = f -> inicio -> prox;
+
+	if (f -> inicio == NULL) {
+		f -> fim = NULL;
+	}
+
+	f -> tam--;
+
+	free(remover);
+	return retorno;
+
 }
 
-bool fila_esta_vazia(FILA f) {
-    Fila* f_interno = (Fila*)f;
-    if (f_interno == NULL) return true;
-    return f_interno->tamanho == 0;
+void liberaFila(fila *f, void (*destrutor)(void *item)) {
+	if (f == NULL) return;
+
+	nodeF *atual = f -> inicio;
+	int contador = 0;
+	while (atual != NULL) {
+		nodeF *proximo = atual->prox;
+
+		if (destrutor != NULL && atual -> item != NULL) {
+			destrutor(atual->item);
+			contador++;
+		}
+
+		free(atual);
+
+		atual = proximo;
+	}
+
+	free(f);
 }
 
-void destruir_fila(FILA f){
-    while(!fila_esta_vazia(f)){
-        fila_desenfileirar(f);
-    }
-    free(f);
+void copiaFila(fila *principal, fila *copia) {
+	if (estaVaziaFila(principal)) {
+		return;
+	}
+
+	nodeF *aux = principal -> inicio;
+	while (aux != NULL) {
+		enqueue(copia, aux -> item);
+		aux = aux -> prox;
+	}
+}
+
+void passthroughQueue(fila *f, void (*acao)(void *item, void *aux_data), void *aux_data) {
+	if (f == NULL || acao == NULL || estaVaziaFila(f)) {
+		return;
+	}
+
+	nodeF *atual = f->inicio;
+
+	while (atual != NULL) {
+		acao(atual->item, aux_data);
+
+		atual = atual->prox;
+	}
+}
+
+nodeF* getProxNode(nodeF *n) {
+	if (n == NULL) {
+		return NULL;
+	}
+	return n -> prox;
+}
+
+void *getItemNode(nodeF *n) {
+	if (n == NULL) {
+		return NULL;
+	}
+	return n->item;
 }

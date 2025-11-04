@@ -1,223 +1,192 @@
-#ifndef texto_h
-#define texto_h
-
-typedef void* TEXTO;
-typedef void* ESTILO;
-
-/*
- A estrutura Texto representa um texto no plano bidimensional, com atributos como identificador (id),
- coordenadas (x, y), cor da borda (corb), cor de preenchimento (corp), âncora (a), conteúdo do texto (txt),
- família da fonte (fFamily), peso da fonte (fWeight) e tamanho da fonte (fSize). 
-*/
-
-typedef struct Text Text;
-typedef struct Stile Stile;
-
-/*
---------------------------------------------------- Funções de Estilo ---------------------------------------------------
-*/
+#ifndef TEXTO_H
+#define TEXTO_H
 
 
-/**
- /// @brief Cria um estilo de texto com os atributos especificados
- /// @param fFamily String referente à font-family
- /// @param fWeight String referente à font-weight
- /// @param fSize String referente à font-size
- /// @return Um ponteiro para a estrutura ESTILO criada
+/* ------- TAD TEXTO -------
+ * Este TAD define dois objetos relacionados: o Texto e seu Estilo.
+ *
+ * O objeto Texto representa um conteúdo textual a ser desenhado,
+ * e contém os seguintes atributos:
+ * Identificador: Permite diferenciar os textos uns dos outros pelo ID;
+ * Âncora: Define a posição de referência do texto no cenário, contendo as
+ * coordenadas (x, y);
+ * Alinhamento da Âncora: Define como o texto se alinha em relação à
+ * âncora: no início ('i'), meio ('m') ou fim ('f');
+ * Conteúdo: A string de caracteres que compõe o texto a ser exibido;
+ * Cores: Define as cores de borda ('corb') e de preenchimento ('corp');
+ * Estilo: Um ponteiro para um objeto 'estilo' que descreve a aparência da fonte.
+ *
+ * O objeto Estilo é um componente do Texto e define sua aparência
+ * visual através dos seguintes atributos:
+ * Família da Fonte: O nome da fonte a ser usada (ex: "Arial");
+ * Peso da Fonte: A espessura da fonte (ex: "normal", "bold");
+ * Tamanho da Fonte: O tamanho do texto (ex: "12px").
  */
-ESTILO criar_estilo (char* fFamily, char* fWeight, char* fSize);
 
-/**
- /// @brief Cria uma cópia de um estilo de texto existente
- /// @param original Ponteiro para a estrutura ESTILO original
- /// @return Retorna um ponteiro para a nova estrutura ESTILO criada como cópia
- */
-ESTILO criaCopiaEstilo(Stile *original);
+/// As definições das structs ficam no arquivo .c
+typedef struct stEstilo estilo;
+typedef struct stTexto texto;
 
-/**
- /// @brief Obtém a font-Family do estilo de texto
- /// @param e Ponteiro para a estrutura ESTILO
- /// @return Retorna a font-Family
- */ 
-char* get_fFamily (ESTILO e);
+/* ------- FUNÇÃO CONSTRUTORA: ESTILO ------- */
 
-/**
- /// @brief Obtém a font-Weight do estilo de texto
- /// @param e Ponteiro para a estrutura ESTILO
- /// @return Retorna a font-Weight
- */ 
-char* get_fWeight (ESTILO e);
+/// @brief: Cria o estilo do texto.
+/// @param fFamily Família da fonte.
+/// @param fWeight Espessura do texto.
+/// @param fSize: Tamanho da fonte.
+/// @return: Retorna o estilo criado do texto.
+estilo *criaEstilo(char *fFamily, char *fWeight, char *fSize);
 
-/**
- /// @brief Obtém a font-Size do estilo de texto
- /// @param e Ponteiro para a estrutura ESTILO
- /// @return Retorna a font-Size
- */ 
-char* get_fSize (ESTILO e);
+/* ------- MÉTODOS GET: ESTILO ------- */
 
-/**
- /// @brief Define a font-Family do estilo de texto
- /// @param e Ponteiro para a estrutura ESTILO
- /// @param fFamily Nova font-Family
- */
-void set_fFamily (ESTILO e, char* fFamily);
+/// @brief: Pega a família da fonte do texto.
+/// @param e: Ponteiro para o estilo da fonte.
+/// @return: Retorna a família da fonte do texto
+char *getfFamily(estilo *e);
 
-/**
- /// @brief Define a font-Weight do estilo de texto
- /// @param e Ponteiro para a estrutura ESTILO
- /// @param fWeight Nova font-Weight
- */
-void set_fWeight (ESTILO e, char* fWeight);
+/// @brief: Pega a espessura do estilo do texto.
+/// @param e: Ponteiro para o estilo da fonte.
+/// @return: Retorna a espessura do estilo do texto.
+char *getfWeight(estilo *e);
 
-/**
- /// @brief Define a font-Size do estilo de texto
- /// @param e Ponteiro para a estrutura ESTILO
- /// @param fSize Nova font-Size
- */
-void set_fSize (ESTILO e, char* fSize);
+/// @brief: Pega o tamanho do estilo do texto.
+/// @param e: Ponteiro para o estilo da fonte.
+/// @return: Retorna o tamanho do estilo do texto.
+char *getfSize(estilo *e);
+
+/* ------- MÉTODOS SET: ESTILO ------- */
+
+/// @brief: Define uma nova família para a fonte do texto.
+/// @param e: Ponteiro para o estilo da fonte.
+/// @param newfFamily: Nova família da fonte do texto.
+void setfFamily(estilo *e, char *newfFamily);
+
+/// @brief: Define uma nova espessura para o estilo do texto.
+/// @param e: Ponteiro para o estilo da fonte.
+/// @param newfWeight: Nova espessura do estilo do texto.
+void setfWeight(estilo *e, char *newfWeight);
+
+/// @brief: Define um novo tamanho para o estilo do texto.
+/// @param e: Ponteiro para o estilo da fonte.
+/// @param newfSize: Novo tamanho do estilo do texto.
+void setfSize(estilo *e, char *newfSize);
+
+/* ------- FUNÇÃO CONSTRUTORA: TEXTO ------- */
+
+/// @brief: Constrói uma forma texto.
+/// @param i: Identificador do texto.
+/// @param x: Coordenada x da âncora do texto.
+/// @param y: Coordenada y da âncora do texto.
+/// @param corb: Cor de borda do texto.
+/// @param corp: Cor de preenchimento do texto.
+/// @param a: Posição da âncora (começo, meio ou fim).
+/// @param txto: O texto em si.
+/// @param e: Ponteiro para estilo.
+/// @return: Retorna o texto já criado.
+texto *criaTexto(int i, double x, double y, char *corb, char *corp, char a, char *txto, estilo *e);
+
+/* ------- MÉTODOS GET: TEXTO ------- */
+
+/// @brief: Pega o identificador do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna o identificador do texto.
+int getIDTexto(texto *t);
+
+/// @brief: Pega a coordenada x da âncora do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna a coordenada x da âncora do texto.
+double getXTexto(texto *t);
+
+/// @brief: Pega a coordenada y da âncora do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna a coordenada y da âncora do texto.
+double getYTexto(texto *t);
+
+/// @brief: Pega a cor de borda do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna a cor de borda do texto.
+char *getCorbTexto(texto *t);
+
+/// @brief: Pega a cor de preenchimento do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna a cor de preenchimento do texto.
+char *getCorpTexto(texto *t);
+
+/// @brief: Pega a posição da âncora do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna a posição da âncora do texto.
+char getATexto(texto *t);
+
+/// @brief: Pega o texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna o texto.
+char *getTxtoTexto(texto *t);
+
+/// @brief: Pega e retorna a quantidade de caracteres do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Quantidade de caracteres do texto.
+int getTamanhoTexto(texto *t);
+
+/// @brief: Pega o estilo do texto.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna o estilo do texto.
+estilo *getEstiloTexto(texto *t);
+
+/* ------- MÉTODOS SET: TEXTO ------- */
+
+/// @brief: Define um novo identificador para o texto.
+/// @param t: Ponteiro para o texto.
+/// @param i: Novo identificador do texto.
+void setIDTexto(texto *t, int i);
+
+/// @brief: Define uma nova coordenada x para a âncora do texto.
+/// @param t: Ponteiro para o texto.
+/// @param x: Nova coordenada x da âncora do texto.
+void setXTexto(texto *t, double x);
+
+/// @brief: Define uma nova coordenada y para a âncora do texto.
+/// @param t: Ponteiro para o texto.
+/// @param y: Nova coordenada y da âncora do texto.
+void setYTexto(texto *t, double y);
+
+/// @brief: Define uma nova cor de borda ao texto.
+/// @param t: Ponteiro para o texto.
+/// @param corb: Nova cor de borda do texto.
+void setCorbTexto(texto *t, char *corb);
+
+/// @brief: Define uma nova cor de preenchimento ao texto.
+/// @param t: Ponteiro para o texto.
+/// @param corp: Nova cor de preenchimento do texto.
+void setCorpTexto(texto *t, char *corp);
+
+/// @brief: Define uma nova posição de âncora para o texto.
+/// @param t: Ponteiro para o texto.
+/// @param a: Novo posição da âncora do texto.
+void setATexto(texto *t, char a);
+
+/// @brief: Define um novo estilo ao texto.
+/// @param t: Ponteiro para o texto.
+/// @param novoEstilo: Novo estilo do texto.
+void setEstiloTexto(texto *t, estilo *novoEstilo);
+
+/* ------- MÉTODOS ADICIONAIS ------- */
+
+/// @brief: Calcula a área atribuída ao círculo.
+/// @param t: Ponteiro para o texto.
+/// @return: Retorna a área calculada do círculo.
+double calcAreaTexto(texto *t);
+
+/// @brief: Libera da memória o texto.
+/// @param t: Ponteiro para o texto.
+void destrutorTexto(texto *t);
+
+/// @brief: Cria um cópia do estilo, dessa forma, o estilo é único para cada texto.
+/// @param original: Ponteiro original, de onde será copiado.
+/// @return: Retorna um ponteiro para a cópia do estilo.
+estilo *criaCopiaEstilo(estilo *original);
+
+/// @brief: Libera memória do estilo.
+/// @param e: Ponteiro para o estilo a ser liberado.
+void destroiEstilo(estilo *e);
 
 
-/*
---------------------------------------------------- Funções de Texto ---------------------------------------------------
-*/
-
-
-/**
- /// @brief Cria um texto com os atributos especificados
- /// @param i Identificador do texto
- /// @param x Coordenada x da ancora do texto
- /// @param y Coordenada y da ancora do texto
- /// @param corb Cor da borda do texto
- /// @param corp Cor de preenchimento do texto
- /// @param a Define a âncora do texto (meio, inicio, fim) 
- /// @param txt Conteúdo do texto
- /// @return Retorna um ponteiro para a estrutura TEXTO criada
- */
-TEXTO criarTexto (int i, double x, double y, char* corb, char* corp, char a, char* txt, ESTILO e);
-
-/**  
- /// @brief Obtém o identificador do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna o identificador do texto
- */
-int get_i_texto (TEXTO t);
-
-/**
- /// @brief 
- /// @param t 
- /// @return 
- */
-ESTILO getEstiloTexto(TEXTO t);
-
-/** 
- /// @brief Obtém a coordenada x da âncora do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna o valor de x
- */
-double get_x_texto (TEXTO t);
-
-/** 
- /// @brief Obtém a coordenada y da âncora do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna o valor de y
- */
-double get_y_texto (TEXTO t);
-
-/** 
- /// @brief Obtém a cor da borda do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna a cor da borda
- */
-char* get_corb_texto (TEXTO t);
-
-/** 
- /// @brief Obtém a cor de preenchimento do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna a cor de preenchimento
- */
-char* get_corp_texto (TEXTO t);
-
-/**
- /// @brief Obtém a âncora do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna a âncora do texto
- */
-char get_a (TEXTO t);
-
-/**
- /// @brief Obtém o conteúdo do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Returna o conteúdo do texto
- */
-char* get_txt (TEXTO t);
-
-/**
- /// @brief Obtém o tamanho do conteúdo do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @return Retorna o tamanho do conteúdo do texto
- */
-int get_tamanho_texto(TEXTO t);
-
-
-/**
- /// @brief Define o identificador do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param id Novo identificador do texto
- */
-void set_i_texto (TEXTO t, int id);
-
-/**
- /// @brief Define o x da âncora do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param x Novo valor de x para a âncora do texto
- */
-void set_x_texto (TEXTO t, double x);
-
-/**
- /// @brief Define o y da âncora do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param y Novo valor de y para a âncora do texto
- */
-void set_y_texto (TEXTO t, double y);
-
-/**
- /// @brief Define a cor da borda do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param corb Nova cor da borda do texto
- */
-void set_corb_texto (TEXTO t, char* corb);
-
-/**
- /// @brief Define a cor de preenchimento do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param corp Nova cor de preenchimento do texto
- */
-void set_corp_texto (TEXTO t, char* corp);
-
-/**
- /// @brief Define a âncora do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param a Nova âncora do texto (meio, inicio, fim)
- */
-void set_a (TEXTO t, char a);
-
-/**
- /// @brief Define o conteúdo do texto
- /// @param t Ponteiro para a estrutura TEXTO
- /// @param txt Novo conteúdo do texto
- */
-void set_txt (TEXTO t, char* txt);
-
-/**
- /// @brief Libera a memória alocada para a estrutura TEXTO
- /// @param t Ponteiro para a estrutura TEXTO
- */
-void excluir_texto (TEXTO t);
-
-/**
- /// @brief Libera a memória alocada para a estrutura ESTILO
- /// @param t Ponteiro para a estrutura ESTILO
- */
-void excluir_estilo (ESTILO e);
-
-#endif
+#endif //TEXTO_H

@@ -1,7 +1,7 @@
 #ifndef retangulo_h
 #define retangulo_h
 
-typedef void* RETANGULO;
+typedef struct Rectangle retangulo;
 
 /*
  Um Retângulo é uma forma geométrica posicionada em um plano bidimensional.
@@ -28,117 +28,117 @@ typedef void* RETANGULO;
  /// @param Corp Cor de preenchimento do retângulo
  /// @return Retorna o retângulo criado pelos parâmetros informados 
  */
-RETANGULO cria_retangulo(int i, double x, double y, double w, double h, char* corb, char* corp);
+retangulo* criaRetangulo(int i, double x, double y, double w, double h, char* corb, char* corp);
 
 /**
  /// @brief Obtém o identificador da forma 
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Identificador da forma
  */
-int get_i_retangulo (RETANGULO r);
+int getIDretangulo (retangulo* r);
 
 /**
  /// @brief Obtém a coordenada x da âncora do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Retorna a coordenada x
  */
-double get_x_retangulo (RETANGULO r);
+double getXretangulo (retangulo* r);
 
 /**
  /// @brief Obtém a coordenada y da âncora do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Retorna a coordenada y
  */
-double get_y_retangulo (RETANGULO r);
+double getYretangulo (retangulo* r);
 
 /**
 /// @brief Obtém a largura do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Retorna a largura w
  */
-double get_w (RETANGULO r);
+double getLarguraRetangulo (retangulo* r);
 
 /**
  /// @brief Obtém a altura do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Retorna a altura h
  */
-double get_h (RETANGULO r);
+double getAlturaRetangulo (retangulo* r);
 
 /**
  /// @brief Obtém a cor da borda do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Retorna a cor da borda
  */
-char* get_corb (RETANGULO r);
+char *getCorbRetangulo (retangulo* r);
 
 /**
  /// @brief Obtém a cor de preenchimento do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @return Retorna a cor de preenchimento
  */
-char* get_corp (RETANGULO r);
-
-/**
- /// @brief Calcula a área do retângulo
- /// @param r Ponteiro para a estrutura do retângulo
- /// @return Retorna a area do retângulo 
- */
-double get_area (RETANGULO r);
+char *getCorpRetangulo (retangulo* r);
 
 /**
  /// @brief Define o identificador do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @param i Novo identificador do retângulo
  */
-void set_i (RETANGULO r, int i);
+void setIDRetangulo (retangulo* r, int i);
 
 /**
  /// @brief Define o x da âncora do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @param x Novo valor de x para a âncora do retângulo
  */
-void set_x_retangulo (RETANGULO r, double x);
+void setXretangulo (retangulo* r, double x);
 
 /**
  /// @brief Define o y da âncora do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @param y Novo valor de y para a âncora do retângulo
  */
-void set_y_retangulo (RETANGULO r, double y);
+void setYretangulo (retangulo* r, double y);
 
 /**
  /// @brief Define a largura do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @param w Nova largura w do retângulo
  */
-void set_w (RETANGULO r, double w);
+void setLarguraRetangulo (retangulo* r, double w);
 
 /**
  /// @brief Define a altura do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @param h Nova altura h do retângulo
  */
-void set_h (RETANGULO r, double h);
+void setAlturaRetangulo (retangulo* r, double h);
 
 /**
  /// @brief Define a cor da borda do retângulo
  /// @param r Ponteiro para a estrutura do retângulo
  /// @param corb Nova cor para a borda do retângulo
  */
-void set_corb (RETANGULO r, char* corb);
+void setCorbRetangulo (retangulo* r, char* corb);
 
 /**
  /// @brief Define a cor de preenchimento do retângulo
  /// @param r Ponteiro para a estrutura retângulo
  /// @param corp Nova cor para o preenchimento do retângulo
  */
-void set_corp (RETANGULO r, char* corp);
+void setCorpRetangulo (retangulo* r, char* corp);
+
+/**
+ /// @brief Calcula a área do retângulo
+ /// @param r Ponteiro para a estrutura do retângulo
+ /// @return Retorna a área do retângulo
+ */
+double calcAreaRetangulo(retangulo *r);
 
 /**
  /// @brief Libera a memória alocada para a estrutura do retângulo
  /// @param r Ponteiro para a estrutura retângulo
  */
-void excluir_retangulo (RETANGULO r);
+void destrutorRetangulo (retangulo* r);
 
 #endif

@@ -1,0 +1,688 @@
+[*] pd 3 4.12 7.39
+[*] lc 6 6
+
+ Retângulo
+ ID: 5
+ Âncora em: (131.91, 379.57)
+ Largura: 52.542675
+ Altura 72.296075
+ Cor de borda: #454837
+ Cor de preenchimento: #0088aa
+
+ Retângulo
+ ID: 6
+ Âncora em: (339.11, 234.43)
+ Largura: 33.050365
+ Altura 29.453844
+ Cor de borda: #ccff00
+ Cor de preenchimento: #ffcc00
+ Texto
+ ID: 7
+ Âncora em: (123.50, 471.90)
+ Posição da Âncora: f
+ Conteúdo: "catecatecatecatecatecatecate"
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Linha
+ ID: 8
+ Âncora de início em: (158.33, 348.05)
+ Âncora de fim em: (210.60, 427.26)
+ Cor: #ffff00
+ Texto
+ ID: 9
+ Âncora em: (472.07, 258.19)
+ Posição da Âncora: m
+ Conteúdo: "catecatecatecatecate"
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Linha
+ ID: 10
+ Âncora de início em: (257.26, 305.99)
+ Âncora de fim em: (279.97, 346.38)
+ Cor: #800080
+[*] atch 3 6 9
+[*] pd 5 585.28 565.76
+[*] lc 8 6
+
+ Linha
+ ID: 11
+ Âncora de início em: (476.32, 415.18)
+ Âncora de fim em: (492.79, 489.52)
+ Cor: #454837
+
+ Linha
+ ID: 12
+ Âncora de início em: (324.90, 470.87)
+ Âncora de fim em: (345.83, 555.76)
+ Cor: #454837
+
+ Linha
+ ID: 13
+ Âncora de início em: (350.52, 129.04)
+ Âncora de fim em: (370.44, 168.82)
+ Cor: #800080
+
+ Círculo
+ ID: 14
+ Âncora em: (255.53, 298.25)
+ Raio: 29.557775
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+ Texto
+ ID: 15
+ Âncora em: (420.22, 224.75)
+ Posição da Âncora: f
+ Conteúdo: "abaabaabaabaaba"
+ Cor de borda: #454837
+ Cor de preenchimento: #decd87
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Retângulo
+ ID: 16
+ Âncora em: (430.83, 104.10)
+ Largura: 45.056292
+ Altura 75.924987
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] atch 5 7 8
+[*] shft 3 d 1
+
+ Linha
+ ID: 10
+ Âncora de início em: (257.26, 305.99)
+ Âncora de fim em: (279.97, 346.38)
+ Cor: #800080
+[*] shft 5 e 1
+
+ Retângulo
+ ID: 16
+ Âncora em: (430.83, 104.10)
+ Largura: 45.056292
+ Altura 75.924987
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] shft 5 e 1
+ Texto
+ ID: 15
+ Âncora em: (420.22, 224.75)
+ Posição da Âncora: f
+ Conteúdo: "abaabaabaabaaba"
+ Cor de borda: #454837
+ Cor de preenchimento: #decd87
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] dsp 5 -387.78 6.74 i
+ Texto
+ ID: 15
+ Âncora em: (197.50, 572.50)
+ Posição da Âncora: f
+ Conteúdo: "abaabaabaabaaba"
+ Cor de borda: #454837
+ Cor de preenchimento: #decd87
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] shft 5 e 1
+
+ Círculo
+ ID: 14
+ Âncora em: (255.53, 298.25)
+ Raio: 29.557775
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+[*] dsp 5 -385.28 11.74 i
+
+ Círculo
+ ID: 14
+ Âncora em: (200.00, 577.50)
+ Raio: 29.557775
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+[*] shft 5 e 1
+
+ Linha
+ ID: 13
+ Âncora de início em: (350.52, 129.04)
+ Âncora de fim em: (370.44, 168.82)
+ Cor: #800080
+[*] dsp 5 -382.78 16.74 i
+
+ Linha
+ ID: 13
+ Âncora de início em: (202.50, 582.50)
+ Âncora de fim em: (222.42, 622.28)
+ Cor: #800080
+[*] rjd 3 d 193.38 565.11 2.50 5.00
+ Texto
+ ID: 9
+ Âncora em: (197.50, 572.50)
+ Posição da Âncora: m
+ Conteúdo: "catecatecatecatecate"
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Linha
+ ID: 8
+ Âncora de início em: (200.00, 577.50)
+ Âncora de fim em: (252.27, 656.72)
+ Cor: #ffff00
+ Texto
+ ID: 7
+ Âncora em: (202.50, 582.50)
+ Posição da Âncora: f
+ Conteúdo: "catecatecatecatecatecatecate"
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Retângulo
+ ID: 6
+ Âncora em: (205.00, 587.50)
+ Largura: 33.050365
+ Altura 29.453844
+ Cor de borda: #ccff00
+ Cor de preenchimento: #ffcc00
+
+ Retângulo
+ ID: 5
+ Âncora em: (207.50, 592.50)
+ Largura: 52.542675
+ Altura 72.296075
+ Cor de borda: #454837
+ Cor de preenchimento: #0088aa
+[*] calc
+Forma 15 (I) vs Forma 14 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I < J -->>> forma 15 (I) (área 300.00) foi esmagada por forma 14 (J) (área 2744.69).
+Forma 13 (I) vs Forma 9 (J). NÃO HOUVE SOBREPOSIÇÃO.
+Forma 8 (I) vs Forma 7 (J). NÃO HOUVE SOBREPOSIÇÃO.
+Forma 6 (I) vs Forma 5 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I < J -->>> forma 6 (I) (área 973.46) foi esmagada por forma 5 (J) (área 3798.63).
+Área total esmagada no round: 1273.46
+[*] pd 1 4.12 7.39
+[*] lc 6 6
+
+ Linha
+ ID: 17
+ Âncora de início em: (389.57, 468.48)
+ Âncora de fim em: (412.60, 521.25)
+ Cor: #ccff00
+ Texto
+ ID: 18
+ Âncora em: (262.55, 440.57)
+ Posição da Âncora: i
+ Conteúdo: "catecate"
+ Cor de borda: #ccff00
+ Cor de preenchimento: #ffcc00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Linha
+ ID: 19
+ Âncora de início em: (461.37, 357.63)
+ Âncora de fim em: (532.28, 394.43)
+ Cor: #454837
+
+ Linha
+ ID: 20
+ Âncora de início em: (14.12, 206.94)
+ Âncora de fim em: (75.07, 245.71)
+ Cor: #ffff00
+
+ Linha
+ ID: 21
+ Âncora de início em: (505.65, 102.96)
+ Âncora de fim em: (575.28, 175.30)
+ Cor: #800080
+ Texto
+ ID: 22
+ Âncora em: (303.85, 320.48)
+ Posição da Âncora: i
+ Conteúdo: "caxicaxicaxicaxicaxicaxicaxi"
+ Cor de borda: #454837
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] atch 1 6 9
+[*] pd 7 585.28 565.76
+[*] lc 8 6
+
+ Linha
+ ID: 23
+ Âncora de início em: (391.54, 162.60)
+ Âncora de fim em: (427.15, 240.49)
+ Cor: #ccff00
+
+ Linha
+ ID: 24
+ Âncora de início em: (239.36, 23.88)
+ Âncora de fim em: (273.08, 79.11)
+ Cor: #800080
+
+ Círculo
+ ID: 25
+ Âncora em: (159.05, 327.06)
+ Raio: 23.761294
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+
+ Retângulo
+ ID: 26
+ Âncora em: (307.71, 386.52)
+ Largura: 50.428284
+ Altura 56.847165
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+
+ Retângulo
+ ID: 27
+ Âncora em: (448.85, 310.10)
+ Largura: 18.399952
+ Altura 46.461043
+ Cor de borda: #ccff00
+ Cor de preenchimento: #0088aa
+
+ Círculo
+ ID: 28
+ Âncora em: (256.05, 106.21)
+ Raio: 9.313620
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+[*] atch 7 7 8
+[*] shft 1 d 1
+ Texto
+ ID: 22
+ Âncora em: (303.85, 320.48)
+ Posição da Âncora: i
+ Conteúdo: "caxicaxicaxicaxicaxicaxicaxi"
+ Cor de borda: #454837
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] shft 7 e 1
+
+ Círculo
+ ID: 28
+ Âncora em: (256.05, 106.21)
+ Raio: 9.313620
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+[*] shft 7 e 1
+
+ Retângulo
+ ID: 27
+ Âncora em: (448.85, 310.10)
+ Largura: 18.399952
+ Altura 46.461043
+ Cor de borda: #ccff00
+ Cor de preenchimento: #0088aa
+[*] dsp 7 -33.61 -389.10 i
+
+ Retângulo
+ ID: 27
+ Âncora em: (551.67, 176.66)
+ Largura: 18.399952
+ Altura 46.461043
+ Cor de borda: #ccff00
+ Cor de preenchimento: #0088aa
+[*] shft 7 e 1
+
+ Retângulo
+ ID: 26
+ Âncora em: (307.71, 386.52)
+ Largura: 50.428284
+ Altura 56.847165
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] dsp 7 -31.11 -384.10 i
+
+ Retângulo
+ ID: 26
+ Âncora em: (554.17, 181.66)
+ Largura: 50.428284
+ Altura 56.847165
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] shft 7 e 1
+
+ Círculo
+ ID: 25
+ Âncora em: (159.05, 327.06)
+ Raio: 23.761294
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] dsp 7 -28.61 -379.10 i
+
+ Círculo
+ ID: 25
+ Âncora em: (556.67, 186.66)
+ Raio: 23.761294
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] rjd 1 d 547.55 169.28 2.50 5.00
+
+ Linha
+ ID: 21
+ Âncora de início em: (551.67, 176.67)
+ Âncora de fim em: (621.29, 249.01)
+ Cor: #800080
+
+ Linha
+ ID: 20
+ Âncora de início em: (554.17, 181.67)
+ Âncora de fim em: (615.12, 220.44)
+ Cor: #ffff00
+
+ Linha
+ ID: 19
+ Âncora de início em: (556.67, 186.67)
+ Âncora de fim em: (627.58, 223.47)
+ Cor: #454837
+ Texto
+ ID: 18
+ Âncora em: (559.17, 191.67)
+ Posição da Âncora: i
+ Conteúdo: "catecate"
+ Cor de borda: #ccff00
+ Cor de preenchimento: #ffcc00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Linha
+ ID: 17
+ Âncora de início em: (561.67, 196.67)
+ Âncora de fim em: (584.70, 249.44)
+ Cor: #ccff00
+[*] calc
+Forma 27 (I) vs Forma 26 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I < J -->>> forma 27 (I) (área 854.88) foi esmagada por forma 26 (J) (área 2866.70).
+Forma 25 (I) vs Forma 21 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I >= J -->>>
+ forma 25 (I) (área 1773.74) modificou a forma 21 (J) (área 200.80).
+
+Forma 20 (I) vs Forma 19 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I < J -->>> forma 20 (I) (área 144.48) foi esmagada por forma 19 (J) (área 159.78).
+Forma 18 (I) vs Forma 17 (J). NÃO HOUVE SOBREPOSIÇÃO.
+Área total esmagada no round: 999.36
+[*] pd 3 4.12 7.39
+[*] lc 6 6
+
+ Linha
+ ID: 29
+ Âncora de início em: (499.71, 243.73)
+ Âncora de fim em: (513.41, 323.64)
+ Cor: #454837
+ Texto
+ ID: 30
+ Âncora em: (412.57, 465.39)
+ Posição da Âncora: i
+ Conteúdo: "22"
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Círculo
+ ID: 31
+ Âncora em: (473.85, 387.23)
+ Raio: 33.008709
+ Cor de borda: #ffff00
+ Cor de preenchimento: #0088aa
+ Texto
+ ID: 32
+ Âncora em: (65.27, 432.98)
+ Posição da Âncora: i
+ Conteúdo: "1"
+ Cor de borda: #ccff00
+ Cor de preenchimento: #0088aa
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Retângulo
+ ID: 33
+ Âncora em: (248.79, 102.80)
+ Largura: 59.160707
+ Altura 56.561868
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+
+ Círculo
+ ID: 34
+ Âncora em: (63.61, 186.66)
+ Raio: 29.986021
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+[*] atch 3 6 9
+[*] pd 6 585.28 565.76
+[*] lc 8 6
+ Texto
+ ID: 35
+ Âncora em: (206.71, 373.89)
+ Posição da Âncora: f
+ Conteúdo: "2222222"
+ Cor de borda: #454837
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Círculo
+ ID: 36
+ Âncora em: (36.41, 78.07)
+ Raio: 11.621547
+ Cor de borda: #800080
+ Cor de preenchimento: #0088aa
+ Texto
+ ID: 37
+ Âncora em: (433.10, 497.01)
+ Posição da Âncora: i
+ Conteúdo: "22222222"
+ Cor de borda: #454837
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Retângulo
+ ID: 38
+ Âncora em: (146.36, 209.34)
+ Largura: 66.992428
+ Altura 75.376111
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+ Texto
+ ID: 39
+ Âncora em: (368.46, 352.67)
+ Posição da Âncora: f
+ Conteúdo: "3333333333"
+ Cor de borda: #454837
+ Cor de preenchimento: #decd87
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Círculo
+ ID: 40
+ Âncora em: (180.22, 355.76)
+ Raio: 29.262891
+ Cor de borda: #ffff00
+ Cor de preenchimento: #decd87
+[*] atch 6 7 8
+[*] shft 3 d 1
+
+ Círculo
+ ID: 34
+ Âncora em: (63.61, 186.66)
+ Raio: 29.986021
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+[*] shft 6 e 1
+
+ Círculo
+ ID: 40
+ Âncora em: (180.22, 355.76)
+ Raio: 29.262891
+ Cor de borda: #ffff00
+ Cor de preenchimento: #decd87
+[*] shft 6 e 1
+ Texto
+ ID: 39
+ Âncora em: (368.46, 352.67)
+ Posição da Âncora: f
+ Conteúdo: "3333333333"
+ Cor de borda: #454837
+ Cor de preenchimento: #decd87
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] dsp 6 -908.61 -389.10 i
+ Texto
+ ID: 39
+ Âncora em: (-323.33, 176.66)
+ Posição da Âncora: f
+ Conteúdo: "3333333333"
+ Cor de borda: #454837
+ Cor de preenchimento: #decd87
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] shft 6 e 1
+
+ Retângulo
+ ID: 38
+ Âncora em: (146.36, 209.34)
+ Largura: 66.992428
+ Altura 75.376111
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] dsp 6 -906.11 -384.10 i
+
+ Retângulo
+ ID: 38
+ Âncora em: (-320.83, 181.66)
+ Largura: 66.992428
+ Altura 75.376111
+ Cor de borda: #ffff00
+ Cor de preenchimento: #ffcc00
+[*] shft 6 e 1
+ Texto
+ ID: 37
+ Âncora em: (433.10, 497.01)
+ Posição da Âncora: i
+ Conteúdo: "22222222"
+ Cor de borda: #454837
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] dsp 6 -903.61 -379.10 i
+ Texto
+ ID: 37
+ Âncora em: (-318.33, 186.66)
+ Posição da Âncora: i
+ Conteúdo: "22222222"
+ Cor de borda: #454837
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+[*] rjd 3 d -327.45 169.28 2.50 5.00
+
+ Retângulo
+ ID: 33
+ Âncora em: (-323.33, 176.67)
+ Largura: 59.160707
+ Altura 56.561868
+ Cor de borda: #800080
+ Cor de preenchimento: #ffcc00
+ Texto
+ ID: 32
+ Âncora em: (-320.83, 181.67)
+ Posição da Âncora: i
+ Conteúdo: "1"
+ Cor de borda: #ccff00
+ Cor de preenchimento: #0088aa
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Círculo
+ ID: 31
+ Âncora em: (-318.33, 186.67)
+ Raio: 33.008709
+ Cor de borda: #ffff00
+ Cor de preenchimento: #0088aa
+ Texto
+ ID: 30
+ Âncora em: (-315.83, 191.67)
+ Posição da Âncora: i
+ Conteúdo: "22"
+ Cor de borda: #ffff00
+ Cor de preenchimento: #66ff00
+ Família da fonte: sans
+ Peso da fonte: n
+ Tamanho da fonte: 12
+
+
+ Linha
+ ID: 29
+ Âncora de início em: (-313.33, 196.67)
+ Âncora de fim em: (-299.63, 276.58)
+ Cor: #454837
+[*] calc
+Forma 39 (I) vs Forma 38 (J). NÃO HOUVE SOBREPOSIÇÃO.
+Forma 37 (I) vs Forma 33 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I < J -->>> forma 37 (I) (área 160.00) foi esmagada por forma 33 (J) (área 3346.24).
+Forma 32 (I) vs Forma 31 (J). HOUVE SOBREPOSIÇÃO.
+<<<-- I < J -->>> forma 32 (I) (área 20.00) foi esmagada por forma 31 (J) (área 3423.00).
+Forma 30 (I) vs Forma 29 (J). NÃO HOUVE SOBREPOSIÇÃO.
+Área total esmagada no round: 180.00
+
+ ----- RELATÓRIO FINAL ----- 
+Pontuação total: 2452.817855
+Número de instruções realizadas: 48
+Número total de disparos: 24
+Número de formas esmagadas: 6
+Número de formas clonadas: 1

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
+<g>
+	<line id="41" x1="465.584686" y1="336.351714" x2="484.574562" y2="390.658480" stroke="#800080" stroke-width="1.500000" />
+	<rect id="42" x="212.225780" y="290.047462" width="59.418706" height="68.223532" stroke="#454837" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="43" x1="457.870720" y1="495.535478" x2="530.272314" y2="543.029292" stroke="#454837" stroke-width="1.500000" />
+	<rect id="44" x="43.504164" y="51.739474" width="16.807263" height="50.755313" stroke="#454837" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="45" cx="479.823097" cy="168.398391" r="7.590410" stroke="#ccff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="46" cx="504.473587" cy="263.133956" r="15.087293" stroke="#800080" fill="#66ff00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="47" cx="372.123932" cy="34.080835" r="16.694787" stroke="#800080" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="48" x1="108.022949" y1="474.491891" x2="158.515755" y2="503.503261" stroke="#800080" stroke-width="1.500000" />
+ <circle id="49" cx="88.065358" cy="123.993624" r="18.979602" stroke="#ccff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<text id="50" x="349.942714" y="478.356190" stroke="#800080" fill="#0088aa" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">1</text>
+	<line id="51" x1="216.450916" y1="304.908447" x2="237.664249" y2="332.601589" stroke="#ffff00" stroke-width="1.500000" />
+ <circle id="52" cx="370.778509" cy="88.396793" r="32.034606" stroke="#ffff00" fill="#decd87" opacity="0.500000" stroke-width="1.500000" />
+	<line id="53" x1="397.164300" y1="382.085919" x2="436.009977" y2="436.578442" stroke="#ccff00" stroke-width="1.500000" />
+	<text id="54" x="474.586663" y="65.662423" stroke="#ccff00" fill="#decd87" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">abaabaabaabaabaabaabaaba</text>
+ <circle id="14" cx="200.000000" cy="577.500000" r="29.557775" stroke="#ffff00" fill="#66ff00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="13" x1="202.500000" y1="582.500000" x2="222.423952" y2="622.279836" stroke="#800080" stroke-width="1.500000" />
+	<text id="9" x="197.500000" y="572.500000" stroke="#800080" fill="#ffcc00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="middle">catecatecatecatecate</text>
+	<line id="8" x1="200.000000" y1="577.500000" x2="252.269656" y2="656.718367" stroke="#ffff00" stroke-width="1.500000" />
+	<text id="7" x="202.500000" y="582.500000" stroke="#ffff00" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">catecatecatecatecatecatecate</text>
+	<rect id="5" x="207.500000" y="592.500000" width="52.542675" height="72.296075" stroke="#454837" fill="#0088aa" opacity="0.500000" stroke-width="1.500000" />
+	<rect id="26" x="554.170000" y="181.660000" width="50.428284" height="56.847165" stroke="#ffff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="25" cx="556.670000" cy="186.660000" r="23.761294" stroke="#ffff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="21" x1="551.670000" y1="176.670000" x2="621.292046" y2="249.007822" stroke="#ffcc00" stroke-width="1.500000" />
+ <circle id="10001" cx="556.670000" cy="186.660000" r="23.761294" stroke="#ffcc00" fill="#ffff00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="19" x1="556.670000" y1="186.670000" x2="627.578563" y2="223.470006" stroke="#454837" stroke-width="1.500000" />
+	<text id="18" x="559.170000" y="191.670000" stroke="#ccff00" fill="#ffcc00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">catecate</text>
+	<line id="17" x1="561.670000" y1="196.670000" x2="584.701971" y2="249.440187" stroke="#ccff00" stroke-width="1.500000" />
+	<text id="39" x="-323.330000" y="176.660000" stroke="#454837" fill="#decd87" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">3333333333</text>
+	<rect id="38" x="-320.830000" y="181.660000" width="66.992428" height="75.376111" stroke="#ffff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<rect id="33" x="-323.330000" y="176.670000" width="59.160707" height="56.561868" stroke="#800080" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="31" cx="-318.330000" cy="186.670000" r="33.008709" stroke="#ffff00" fill="#0088aa" opacity="0.500000" stroke-width="1.500000" />
+	<text id="30" x="-315.830000" y="191.670000" stroke="#ffff00" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">22</text>
+	<line id="29" x1="-313.330000" y1="196.670000" x2="-299.630521" y2="276.583588" stroke="#454837" stroke-width="1.500000" />
+	<text id="-1" x="197.500000" y="572.500000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+	<text id="-1" x="205.000000" y="587.500000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+	<text id="-1" x="551.670000" y="176.660000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+	<text id="-1" x="554.170000" y="181.670000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+	<text id="-1" x="-318.330000" y="186.660000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+	<text id="-1" x="-320.830000" y="181.670000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+</g>
+</svg>

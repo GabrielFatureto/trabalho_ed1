@@ -36,16 +36,16 @@ typedef struct stRepositorio repositorio;
 /// @return: Retorna um ponteiro para a arena criada.
 arena *criaArena();
 
-/// @brief: Adiciona uma FORMA à arena.
+/// @brief: Adiciona uma forma à arena.
 /// @param a: Ponteiro para a arena.
-/// @param f: Ponteiro para a FORMA que será adicionado à arena.
-/// @return: Retorna um ponteiro para a FORMA adicionada.
-FORMA *adicionaFormaArena(arena *a, FORMA *f);
+/// @param f: Ponteiro para a forma que será adicionado à arena.
+/// @return: Retorna um ponteiro para a forma adicionada.
+forma *adicionaFormaArena(arena *a, forma *f);
 
-/// @brief: Remove uma FORMA da arena.
+/// @brief: Remove uma forma da arena.
 /// @param a: Ponteiro para a arena.
 /// @return: Retorna um ponteiro para o objeto removido.
-FORMA *removeFormaArena(arena *a);
+forma *removeFormaArena(arena *a);
 
 /// @brief: Destrói a arena.
 /// @param a: Ponteiro para a arena.
@@ -65,6 +65,6 @@ int getArenaNumFormas(arena *a);
 /// @param formas_clonadas: Número de formas clonadas no processo.
 /// @param formas_destruidas: Número de formas destruídas no processo.
 /// @param repo: Ponteiro para o repositório de carregadores e disparadores.
-void processaArena(arena *a, chao *c, double *pontuacao_total, FILA *anotacoes_svg, FILE *arquivo_txt, int *formas_clonadas, int *formas_destruidas, repositorio *repo);
+void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg, FILE *arquivo_txt, int *formas_clonadas, int *formas_destruidas, repositorio *repo);
 
-#endif
+#endif //ARENA_H

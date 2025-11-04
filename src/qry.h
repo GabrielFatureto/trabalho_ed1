@@ -1,5 +1,5 @@
-#ifndef QRY_H
-#define QRY_H
+#ifndef PROCESSAQRY_H
+#define PROCESSAQRY_H
 #include "chao.h"
 #include "disparador.h"
 #include "carregador.h"
@@ -12,10 +12,10 @@ typedef struct stArena arena;
 typedef struct stReportTxt report_txt;
 
 
-/// @brief: Limpa uma FORMA específica de todos os disparadores de um repositório
+/// @brief: Limpa uma forma específica de todos os disparadores de um repositório
 /// @param repo: Ponteiro para o repositório contendo os disparadores.
-/// @param FORMA: Forma a ser removida das posições de disparo
-void limpaFormaDeTodosDisparadores(repositorio *repo, FORMA *FORMA);
+/// @param forma: Forma a ser removida das posições de disparo
+void limpaFormaDeTodosDisparadores(repositorio *repo, forma *forma);
 
 /// @brief: Caso haja formas remanescentes na posição de disparo do disparador, as devolve para o chão.
 /// @param repo: Ponteiro para o repositório contendo os disparadores.
@@ -46,7 +46,7 @@ void destrutorRepositorio(repositorio *repo);
 /// @param formas_clonadas: Número de formas clonadas para report no txt.
 /// @param formas_esmagadas: Número de formas esmagadas para report no txt,
 void processaQry(repositorio *repo, char *nome_path_qry, const char *nome_txt, arena *arena, chao *chao, double *pontuacao_total,
-                 FILA *filaSVG, int *formas_clonadas, int *formas_esmagadas);
+                 fila *filaSVG, int *formas_clonadas, int *formas_esmagadas);
 
 
-#endif
+#endif //PROCESSAQRY_H

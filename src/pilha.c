@@ -1,85 +1,120 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "pilha.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct stNodeP {
+    void *item;
+    node *prox;
+}node;
+
+typedef struct stPilha {
+    node *topo;
+    int tam;
+}pilha;
 
 
-typedef struct No{
-    void* dado;       
-    struct No* proximo;
-} No;
-
-
-typedef struct {
-    No* topo;         
-    int tamanho;
-} Pilha;
-
-PILHA pilha_criar() {
-    Pilha* p_interno = (Pilha*) malloc(sizeof(Pilha));
-    if (p_interno != NULL) {
-        p_interno->topo = NULL;
-        p_interno->tamanho = 0;
-    }
-    return (PILHA)p_interno;
-}
-
-bool pilha_empilhar(PILHA p, void* dado) {
-    Pilha* p_interno = (Pilha*) malloc(sizeof(Pilha));
-    if (p == NULL) return false;
-
-    No* novo_no = (No*) malloc(sizeof(No));
-    if (novo_no == NULL) {
-        return false; 
-    }
-
-    novo_no->dado = dado;
-    novo_no->proximo = p_interno->topo; 
-    p_interno->topo = novo_no;          
-    p_interno->tamanho++;
-
-    return true;
-}
-
-void* pilha_desempilhar(PILHA p) {
-    Pilha* p_interno = (Pilha*)p;
-    if (p == NULL || pilha_esta_vazia(p)) {
+pilha *criaPilha(void) {
+    pilha *p = malloc (sizeof(pilha));
+    if (!p) {
+        printf("falha na alocacao de memoria da pilha!\n");
         return NULL;
     }
 
-    No* no_removido = p_interno->topo;
-    void* dado_retornado = no_removido->dado;
+    p -> topo = NULL;
+    p -> tam = 0;
 
-    p_interno->topo = p_interno->topo->proximo; 
-
-    free(no_removido); 
-    p_interno->tamanho--;
-
-    return dado_retornado;
+    return p;
 }
 
-void* pilha_topo(PILHA p) {
-    Pilha* p_interno = (Pilha*)p;
-    if (p_interno == NULL || pilha_esta_vazia(p)) {
+void push(pilha *p, void *item) {
+    if (p == NULL) return;
+
+    node *novo = (node*) malloc(sizeof(node));
+    if (!novo) {
+        printf("erro ao alocar memoria para o noh da pilha\n");
+        return;
+    }
+
+    novo -> item = item;
+    novo -> prox = p -> topo;
+    p -> topo = novo;
+
+    p -> tam++;
+}
+
+void *pop(pilha *p) {
+    if (estaVaziaPilha(p)) {
         return NULL;
     }
-    return p_interno->topo->dado;
+
+    node *memory = p -> topo;
+
+    void *itemDesempilhado = memory -> item;
+    p -> topo = memory -> prox;
+    free(memory);
+
+    p -> tam--;
+
+    return itemDesempilhado;
 }
 
-int pilha_tamanho(PILHA p) {
-    Pilha* p_interno = (Pilha*)p;
-    if (p_interno == NULL) return 0;
-    return p_interno->tamanho;
-}
-
-bool pilha_esta_vazia(PILHA p) {
-    Pilha* p_interno = (Pilha*)p;
-    if (p_interno == NULL) return true;
-    return p_interno->tamanho == 0;
-}
-
-void destruir_pilha(PILHA p){
-    while(!pilha_esta_vazia(p)){
-        pilha_desempilhar(p);
+void *topo(pilha *p) {
+    if (estaVaziaPilha(p)) {
+        printf("a pilha esta vazia\n");
+        return NULL;
     }
+
+    return p -> topo -> item;
+}
+
+bool estaVaziaPilha(pilha *p) {
+    if (p -> tam == 0) {
+        return true;
+    }
+
+    return false;
+}
+
+void liberaPilha(pilha *p, void (*destrutor)(void *item)) {
+    if (p == NULL) {
+        return;
+    }
+
+    node *atual = p -> topo;
+
+    while (atual != NULL) {
+        node *proximo = atual -> prox;
+
+        if (destrutor != NULL && atual -> item != NULL) {
+            destrutor(atual -> item);
+        }
+
+        free(atual);
+
+        atual = proximo;
+    }
+
     free(p);
+}
+
+
+void copiaPilha(pilha *principal, pilha *copia) {
+    if (estaVaziaPilha(principal)) {
+        return;
+    }
+
+    pilha *auxiliar = criaPilha();
+    node *atual = principal -> topo;
+    while (atual != NULL) {
+        push(auxiliar, atual -> item);
+        atual = atual -> prox;
+    }
+
+    atual = auxiliar -> topo;
+    while (atual != NULL) {
+        push(copia, atual -> item);
+        atual = atual -> prox;
+    }
+
+    liberaPilha(auxiliar, NULL);
 }

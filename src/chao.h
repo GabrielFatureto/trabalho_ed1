@@ -39,23 +39,23 @@ chao *criaChao();
 /// @return: FALSE se não estiver vazio.
 bool chaoEstaVazio(chao *c);
 
-/// @brief: Coloca uma FORMA no chão.
+/// @brief: Coloca uma forma no chão.
 /// @param c: Ponteiro para o chão.
-/// @param f: Ponteiro para a FORMA que será colocada no chão.
-void adicionaNoChao(chao *c, FORMA *f);
+/// @param f: Ponteiro para a forma que será colocada no chão.
+void adicionaNoChao(chao *c, forma *f);
 
-/// @brief: Retira uma FORMA do chão.
+/// @brief: Retira uma forma do chão.
 /// @param c: Ponteiro para o chão.
-/// @return: Retorna um ponteiro para a FORMA que foi retirada.
-FORMA *retiraDoChao(chao *c);
+/// @return: Retorna um ponteiro para a forma que foi retirada.
+forma *retiraDoChao(chao *c);
 
 /// @brief: Libera toda a memória do chão.
 /// @param c: Ponteiro para o chão a ser liberado.
 void destrutorChao(chao *c);
 
-/// @brief: Pega e retorna a FILA do chão.
+/// @brief: Pega e retorna a fila do chão.
 /// @param c: Ponteiro para o chão.
 /// @return: Fila do chão.
-FILA *getFilaDoChao(chao *c);
+fila *getFilaDoChao(chao *c);
 
-#endif
+#endif //CHAO_H

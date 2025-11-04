@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include "retangulo.h"
 
-typedef struct {
+typedef struct Rectangle{
     int i;
     double x, y, w, h;
     char *corb, *corp;
-} Rectangle;
+} retangulo;
 
-RETANGULO cria_retangulo(int i, double x, double y, double w, double h, char* corb, char* corp) {
-    Rectangle* r = (Rectangle*)malloc(sizeof(Rectangle));
+retangulo* criaRetangulo(int i, double x, double y, double w, double h, char* corb, char* corp) {
+    retangulo* r = (retangulo*)malloc(sizeof(retangulo));
     if(r == NULL){
         printf("Erro na alocação de memória!!\n");
         exit(1);
@@ -35,71 +35,71 @@ RETANGULO cria_retangulo(int i, double x, double y, double w, double h, char* co
     }
     strcpy(r->corp, corp);
 
-    return (RETANGULO) r;
+    return (retangulo*) r;
 }
 
-int get_i_retangulo (RETANGULO r){
-    return ((Rectangle*)r)->i;
+int getIDretangulo (retangulo* r){
+    return ((retangulo*)r)->i;
 }
 
-double get_x_retangulo (RETANGULO r){
-    return ((Rectangle*)r)->x;
+double getXretangulo (retangulo* r){
+    return ((retangulo*)r)->x;
 }
 
-double get_y_retangulo (RETANGULO r){
-    return ((Rectangle*)r)->y;
+double getYretangulo (retangulo* r){
+    return ((retangulo*)r)->y;
 }
 
-double get_w (RETANGULO r){
-    return ((Rectangle*)r)->w;
+double getLarguraRetangulo (retangulo* r){
+    return ((retangulo*)r)->w;
 }
 
-double get_h (RETANGULO r){
-    return ((Rectangle*)r)->h;
+double getAlturaRetangulo (retangulo* r){
+    return ((retangulo*)r)->h;
 }
 
-char* get_corb (RETANGULO r){
-    return ((Rectangle*)r)->corb;
+char* getCorbRetangulo (retangulo* r){
+    return ((retangulo*)r)->corb;
 }
 
-char* get_corp (RETANGULO r){
-    return ((Rectangle*)r)->corp;
+char* getCorpRetangulo (retangulo* r){
+    return ((retangulo*)r)->corp;
 }
 
-double get_area (RETANGULO r){
-    return ((Rectangle*)r)->w * ((Rectangle*)r)->h;
+void setIDRetangulo (retangulo* r, int i){
+    ((retangulo*)r)->i = i;
 }
 
-void set_i (RETANGULO r, int i){
-    ((Rectangle*)r)->i = i;
+void setXretangulo (retangulo* r, double x){
+    ((retangulo*)r)->x = x;
 }
 
-void set_x_retangulo (RETANGULO r, double x){
-    ((Rectangle*)r)->x = x;
+void setYretangulo (retangulo* r, double y){
+    ((retangulo*)r)->y = y;
 }
 
-void set_y_retangulo (RETANGULO r, double y){
-    ((Rectangle*)r)->y = y;
+void setLarguraRetangulo (retangulo* r, double w){
+    ((retangulo*)r)->w = w;
 }
 
-void set_w (RETANGULO r, double w){
-    ((Rectangle*)r)->w = w;
+void setAlturaRetangulo (retangulo* r, double h){
+    ((retangulo*)r)->h = h;
 }
 
-void set_h (RETANGULO r, double h){
-    ((Rectangle*)r)->h = h;
+void setCorbRetangulo (retangulo* r, char* corb){
+    strcpy(((retangulo*)r)->corb, corb);
 }
 
-void set_corb (RETANGULO r, char* corb){
-    strcpy(((Rectangle*)r)->corb, corb);
+void setCorpRetangulo (retangulo* r, char* corp){
+    strcpy(((retangulo*)r)->corp, corp);
 }
 
-void set_corp (RETANGULO r, char* corp){
-    strcpy(((Rectangle*)r)->corp, corp);
+double calcAreaRetangulo(retangulo *r) {
+	return ((r -> w) * (r -> h));
 }
 
-void excluir_retangulo (RETANGULO r){
-    free(((Rectangle*)r)->corb);
-    free(((Rectangle*)r)->corp);
+void destrutorRetangulo (retangulo* r){
+    free(((retangulo*)r)->corb);
+    free(((retangulo*)r)->corp);
     free(r);
 }

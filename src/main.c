@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 
@@ -59,29 +60,21 @@ int main(int argc, char *argv[]) {
     // --- 3. Inicialização das Estruturas de Dados ---
     arena* minha_arena = criaArena();
     repositorio* repo = criarRepositorio();
-    FILA* anotacoes_svg = fila_criar();
+    fila* anotacoes_svg = criaFila();
     double pontuacao = 0.0;
     int formas_clonadas = 0, formas_esmagadas = 0;
 
     // --- 4. Execução do ProcessaGeo ---
-    printf("Abrindo arquivo .geo: %s\n", path_geo_completo);
+    chao *meu_chao = processaGeo(path_geo_completo);
+    printf("Lendo o arquivo .geo e adicionando as formas ao chão...\n");
 
-FILE* geo_file = fopen(path_geo_completo, "r");
-if (geo_file == NULL) {
-    fprintf(stderr, "ERRO: Não foi possível abrir o arquivo .geo em: %s\n", path_geo_completo);
-    // Libera o que já foi alocado antes de sair
-    destrutorArena(&minha_arena);
-    destrutorRepositorio(repo);
-    destruir_fila(anotacoes_svg);
-    return 1;
-}
-
-printf("Lendo o arquivo .geo e adicionando as formas ao chão...\n");
-chao *meu_chao = ler_geo(geo_file); // <--- Passa o FILE*
-fclose(geo_file); // <--- Fecha o arquivo após a leitura
-
-if (meu_chao == NULL) {
-    fprintf(stderr,"Falha critica ao processar o .geo (%s)\n", path_geo_completo);
+    if (meu_chao == NULL) {
+        fprintf(stderr,"Falha critica ao processar o .geo (%s)\n", path_geo_completo);
+        destrutorArena(&minha_arena);
+        destrutorRepositorio(repo);
+        liberaFila(anotacoes_svg, NULL);
+        return 1;
+    }
 
     // --- 5. Geração do SVG Inicial ---
     printf("Gerando SVG inicial: %s\n", path_svg_inicial);
@@ -90,7 +83,7 @@ if (meu_chao == NULL) {
     // --- 6. Execução do ProcessaQry (se aplicável) ---
     if (arq_qry_nome != NULL) {
         char path_qry_completo[512];
-        montaCaminho(path_qry_completo, dir_entrada, arq_qry_nome);
+        strcpy(path_qry_completo, arq_qry_nome);
 
         char nome_base_qry[256];
         char* ultimo_slash_qry = strrchr(arq_qry_nome, '/');
@@ -109,8 +102,8 @@ if (meu_chao == NULL) {
                             &formas_clonadas, &formas_esmagadas);
 
 
-        while (!fila_esta_vazia(anotacoes_svg)) {
-            FORMA *anotacao = fila_desenfileirar(anotacoes_svg);
+        while (!estaVaziaFila(anotacoes_svg)) {
+            forma *anotacao = dequeue(anotacoes_svg);
             adicionaNoChao(meu_chao, anotacao);
         }
 
@@ -127,9 +120,8 @@ if (meu_chao == NULL) {
     destrutorRepositorio(repo);
     destrutorChao(meu_chao);
     destrutorArena(&minha_arena);
-    destruir_fila(anotacoes_svg);
+    liberaFila(anotacoes_svg, NULL);
     printf("Programa finalizado com sucesso.\n");
 
     return 0;
-}
 }

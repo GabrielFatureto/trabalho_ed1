@@ -1,90 +1,175 @@
-#include <stdbool.h> 
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <math.h> 
-#include "fila.h"
 #include "geo.h"
+#include "chao.h"
 #include "circulo.h"
-#include "retangulo.h"
 #include "linha.h"
+#include "retangulo.h"
 #include "texto.h"
-#include "svg.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define BUFFER_SIZE 512
+#define COMANDO_SIZE 16
+#define COR_SIZE 64
+#define TEXTO_SIZE 256
+#define ESTILO_FAMILIA_SIZE 64
+#define ESTILO_PESO_SIZE 16
+#define ESTILO_TAMANHO_SIZE 16
+
+typedef struct stEstiloTexto {
+    char familia[ESTILO_FAMILIA_SIZE];
+    char peso[ESTILO_PESO_SIZE];
+    char tamanho[ESTILO_TAMANHO_SIZE];
+} estilo_texto;
 
 
-#define MAX_SIZE 1024
+static void inicializar_estilo_padrao(estilo_texto* estilo) {
+    strcpy(estilo -> familia, "sans");
+    strcpy(estilo -> peso, "n");
+    strcpy(estilo -> tamanho, "12");
+}
 
 
-FILA ler_geo (FILE* arqgeo){
-    FILA f = fila_criar();
-
-    FILE* svg = fopen("saida.svg", "w");
-    abrir_SVG(svg);
-
-    double x, y, x1, y1, r, x2, y2, w, h;
-    int i;
-    char corb[20], corp[20], cor[20], comando[10];
-
-    char aux[MAX_SIZE];     
-    char txt[MAX_SIZE];     
-    char a;                 
-    char fFamily[50];       
-    char fWeight[50];       
-    char fSize[20];
-
-    ESTILO e = criar_estilo("sans", "b", "12px");
-
-    char linha [MAX_SIZE];
-
-    while(fgets(linha, MAX_SIZE, arqgeo)){
-        linha[strcspn(linha, "\r\n")] = '\0';
-        if (linha[0] == '\0' || linha[0] == '\n') continue;
-        aux[0] = '\0';
-        comando[0] = '\0';
-        strcpy(aux, linha);
-        sscanf(aux, "%s", comando);
-
-        if(strcmp(comando, "c") == 0){
-            sscanf(aux, "%s %d %lf %lf %lf %s %s", comando, &i, &x, &y, &r, corb, corp);
-            CIRCULO c = cria_circulo(i, x, y, r, corb, corp);
-            fila_enfileirar(f, c);
-
-            desenhar_CirculoSVG(svg, c);
-        }
-        else if(strcmp(comando, "r") == 0){
-            sscanf(aux, "%s %d %lf %lf %lf %lf %s %s", comando, &i, &x, &y, &w, &h, corb, corp);
-            RETANGULO r = cria_retangulo(i, x, y, w, h, corb, corp);
-            fila_enfileirar(f, r);
-
-            desenhar_RetanguloSVG(svg, r);
-        }
-        else if(strcmp(comando, "l") == 0){
-            sscanf(aux, "%s %d %lf %lf %lf %lf %s", comando, &i, &x1, &y1, &x2, &y2, cor);
-            LINHA l = cria_linha(i, x1, y1, x2, y2, cor);
-            fila_enfileirar(f, l);
-
-            desenhar_LinhaSVG(svg, l);
-        }
-        else if(strcmp(comando, "t") == 0){
-            sscanf(aux, "%s %d %lf %lf %s %s %c \"%[^\"]\"", comando, &i, &x, &y, corb, corp, &a, txt);
-            TEXTO t = criarTexto(i, x, y, corb, corp, a, txt);
-            fila_enfileirar(f, t);
-
-            desenhar_TextoSVG(svg, t, e);
-        }
-        else if(strcmp(comando, "ts") == 0){
-            sscanf(aux, "%s %s %s %s", comando, fFamily, fWeight, fSize);
-            set_fFamily(e, fFamily);
-            set_fWeight(e, fWeight);
-            set_fSize(e, fSize);
-        }
-        else{
-            printf("Comando desconhecido: %s\n", comando);
-        }
-
-        fechar_SVG(svg);
+static void extrair_texto_com_espacos(const char* linha_buffer, int offset, char* conteudo_texto, size_t tamanho_max) {
+    if (offset <= 0) {
+        conteudo_texto[0] = '\0';
+        return;
     }
 
-    return f;
+    const char *inicio_texto = linha_buffer + offset;
+    while (*inicio_texto && (*inicio_texto == ' ' || *inicio_texto == '\t')) {
+        inicio_texto++;
+    }
 
+    strncpy(conteudo_texto, inicio_texto, tamanho_max - 1);
+    conteudo_texto[tamanho_max - 1] = '\0';
+    conteudo_texto[strcspn(conteudo_texto, "\r\n")] = '\0';
+}
+
+
+static void processar_circulo(const char* linha, chao* meuChao) {
+    int id;
+    double x, y, r;
+    char corb[COR_SIZE] = "", corp[COR_SIZE] = "";
+
+    int num_lidos = sscanf(linha, "c %i %lf %lf %lf %s %s", &id, &x, &y, &r, corb, corp);
+    if (num_lidos < 4) return;
+
+    circulo *c = criaCirculo(id, x, y, r, corb, corp);
+    forma *f = criaForma(id, CIRCULO, c);
+    adicionaNoChao(meuChao, f);
+}
+
+static void processar_retangulo(const char* linha, chao* meuChao) {
+    int id;
+    double x, y, w, h;
+    char corb[COR_SIZE] = "", corp[COR_SIZE] = "";
+
+    int num_lidos = sscanf(linha, "r %i %lf %lf %lf %lf %s %s", &id, &x, &y, &w, &h, corb, corp);
+    if (num_lidos < 5) return;
+
+    retangulo *r = criaRetangulo(id, x, y, w, h, corb, corp);
+    forma *f = criaForma(id, RETANGULO, r);
+    adicionaNoChao(meuChao, f);
+}
+
+static void processar_linha(const char* linha_buffer, chao* meuChao) {
+    int id;
+    double x1, y1, x2, y2;
+    char cor[COR_SIZE] = "";
+
+    int num_lidos = sscanf(linha_buffer, "l %i %lf %lf %lf %lf %s", &id, &x1, &y1, &x2, &y2, cor);
+    if (num_lidos < 5) return;
+
+    linha *l = criaLinha(id, x1, y1, x2, y2, cor, false);
+    forma *f = criaForma(id, LINHA, l);
+    adicionaNoChao(meuChao, f);
+}
+
+static void processar_texto(const char* linha_buffer, chao* meuChao, estilo_texto* estilo_atual) {
+    int id;
+    double x, y;
+    char corp[COR_SIZE] = "", corb[COR_SIZE] = "";
+    char ancora = 'i';
+    char conteudo_texto[TEXTO_SIZE] = "";
+    int offset = 0;
+
+    sscanf(linha_buffer, "t %i %lf %lf %s %s %c %n", &id, &x, &y, corb, corp, &ancora, &offset);
+
+    extrair_texto_com_espacos(linha_buffer, offset, conteudo_texto, sizeof(conteudo_texto));
+
+    estilo *e_temp = criaEstilo(estilo_atual->familia, estilo_atual->peso, estilo_atual->tamanho);
+    texto *t = criaTexto(id, x, y, corb, corp, ancora, conteudo_texto, e_temp);
+    destroiEstilo(e_temp);
+
+    forma *f = criaForma(id, TEXTO, t);
+    if (f) {
+        adicionaNoChao(meuChao, f);
+    }
+}
+
+static void processar_estilo_texto(const char* linha, estilo_texto* estilo_atual) {
+    char familia[ESTILO_FAMILIA_SIZE];
+    char peso[ESTILO_PESO_SIZE];
+    char tamanho[ESTILO_TAMANHO_SIZE];
+
+    int num_lidos = sscanf(linha, "ts %s %s %s", familia, peso, tamanho);
+    if (num_lidos == 3) {
+        strcpy(estilo_atual->familia, familia);
+        strcpy(estilo_atual->peso, peso);
+        strcpy(estilo_atual->tamanho, tamanho);
+    }
+}
+
+
+static void processar_comando(const char* linha_buffer, const char* comando,
+                             chao* meuChao, estilo_texto* estilo_atual) {
+    if (strcmp(comando, "c") == 0) {
+        processar_circulo(linha_buffer, meuChao);
+    }
+    else if (strcmp(comando, "r") == 0) {
+        processar_retangulo(linha_buffer, meuChao);
+    }
+    else if (strcmp(comando, "l") == 0) {
+        processar_linha(linha_buffer, meuChao);
+    }
+    else if (strcmp(comando, "t") == 0) {
+        processar_texto(linha_buffer, meuChao, estilo_atual);
+    }
+    else if (strcmp(comando, "ts") == 0) {
+        processar_estilo_texto(linha_buffer, estilo_atual);
+    }
+}
+
+
+chao* processaGeo(const char *nome_path_geo) {
+    FILE *arquivo_geo = fopen(nome_path_geo, "r");
+    if (arquivo_geo == NULL) {
+        perror("Erro ao abrir o arquivo .geo");
+        return NULL;
+    }
+
+    chao *meuChao = criaChao();
+    if (meuChao == NULL) {
+        fclose(arquivo_geo);
+        return NULL;
+    }
+
+    estilo_texto estilo_atual;
+    inicializar_estilo_padrao(&estilo_atual);
+
+    char linha_buffer[BUFFER_SIZE];
+    char comando[COMANDO_SIZE];
+
+    while (fgets(linha_buffer, sizeof(linha_buffer), arquivo_geo) != NULL) {
+
+        comando[0] = '\0';
+        sscanf(linha_buffer, "%s", comando);
+
+        processar_comando(linha_buffer, comando, meuChao, &estilo_atual);
+    }
+
+    fclose(arquivo_geo);
+    return meuChao;
 }

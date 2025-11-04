@@ -1,324 +1,210 @@
 #include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
+
 #include "forma.h"
 #include "circulo.h"
+#include <stdlib.h>
+#include <string.h>
 #include "retangulo.h"
 #include "linha.h"
-#include "texto.h"
-#include "disparador.h"
-#include "pilha.h"
-#include "fila.h"
 #include "svg.h"
+#include "texto.h"
 
-typedef struct {
-    FORMA geometrica;
-    tipoForma tipo;
-    void* dados;
-} Forma;
+typedef struct stForma {
+	int id;
+	tipoForma tipo;
+	void *dados;
+}forma;
 
-FORMA cria_Forma_circulo (char tipo, int id, double x, double y, double r, char* corb, char* corp) {
-    Forma *F = (Forma*)malloc(sizeof(Forma));
-    if (F == NULL){
-        printf("Erro na alocação de memória para a criação da Forma. \n");
-        exit (1);
-    }
-    F->geometrica = cria_circulo (id, x, y, r, corb, corp);
-    F->tipo = tipo;
-    F->dados = F->geometrica;
-    return ((Forma*)F);
+forma *criaForma(int id, tipoForma tipo, void *dados) {
+	forma *f = malloc (sizeof(forma));
+	if (f == NULL) {
+		printf("Erro ao criar a forma!\n");
+		return NULL;
+	}
+
+	f -> id = id;
+	f -> tipo = tipo;
+	f -> dados = dados;
+
+	return f;
 }
 
-FORMA cria_Forma_retangulo (char tipo, int id, double x, double y, double w, double h, char* corb, char* corp) {
-    Forma *F = (Forma*)malloc(sizeof(Forma));
-    if (F == NULL){
-        printf("Erro na alocação de memória para a criação da Forma. \n");
-        exit (1);
-    }
-    F->geometrica = cria_retangulo (id, x, y, w, h, corb, corp);
-    F->tipo = tipo;
-    return ((Forma*)F);
+int getIDforma(forma *f) {
+	return f -> id;
 }
 
-FORMA cria_Forma_linha (char tipo, int id, double x1, double y1, double x2, double y2, char *cor) {
-    Forma *F = (Forma*)malloc(sizeof(Forma));
-    if (F == NULL){
-        printf("Erro na alocação de memória para a criação da Forma. \n");
-        exit (1);
-    }
-    F->geometrica = cria_linha (id, x1, y1, x2, y2, cor, false);
-    F->tipo = tipo;
-    return ((Forma*)F);
+
+tipoForma getTipoForma(forma *f) {
+	return f -> tipo;
 }
 
-FORMA cria_Forma_texto (TEXTO t) {
-    Forma *F = (Forma*)malloc(sizeof(Forma));
-    if (F == NULL){
-        printf("Erro na alocação de memória para a criação da Forma. \n");
-        exit (1);
-    }
-    F->geometrica = NULL;
-    F->dados = t;
-    F->tipo = 't';
-    return ((Forma*)F);
+void *getFormaDados(forma *f) {
+	return f -> dados;
 }
 
-void *getFormaDados(FORMA f) {
-    Forma *F = (Forma*)malloc(sizeof(Forma));
-	return F -> dados;
+void setIDforma(forma *f, int novoID) {
+	f -> id = novoID;
 }
 
-char get_tipo_Forma (FORMA F) {
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-    return ((Forma*)F)->tipo;
-}
-
-int get_id_Forma (FORMA F) {
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-
-    char tipo = ((Forma*)F)->tipo;
-    FORMA geo = ((Forma*)F)->geometrica; 
-
-    if (tipo == 'c') {
-        return get_i(geo); 
-    }
-    else if (tipo == 'r') {
-        return get_i_retangulo(geo); 
-    }
-    else if (tipo == 'l') {
-        return get_i_linha(geo);
-    }
-    else if (tipo == 't') {
-        return get_i_texto(geo);
-    }
-    
-    // Se chegar aqui, o tipo é desconhecido
-    return -1; 
-}
-
-void escreveDadosFormaTxt(FORMA *f, FILE *txt, char *reportDaFuncaoQRY) {
-    tipoForma tipo = get_tipo_Forma(f);
-    void* dados = getFormaDados(f);
-
-    const char* report_safe = (reportDaFuncaoQRY != NULL) ? reportDaFuncaoQRY : "";
-
-    switch (tipo) {
-        case circulo: {
-            fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
-                report_safe,
-                get_id_Forma(f),
-                get_x_circulo(dados),
-                get_y_circulo(dados),
-                get_r(dados),
-                get_corb(dados),
-                get_corp(dados));
-            break;
-        }
-
-        case retangulo: {
-            fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
-                report_safe,
-                get_id_Forma(f),
-                get_x_retangulo(dados),
-                get_y_retangulo(dados),
-                get_w(dados),
-                get_h(dados),
-                get_corb(dados),
-                get_corp(dados));
-            break;
-        }
-
-        case linha: {
-            fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
-                report_safe,
-                get_id_Forma(f),
-                get_x1_linha(dados),
-                get_y1_linha(dados),
-                get_x2_linha(dados),
-                get_y2_linha(dados),
-                get_cor_linha(dados));
-            break;
-        }
-
-        case texto: {
-            TEXTO* t = (TEXTO*)dados;
-            ESTILO* e = getEstiloTexto(t);
-
-            fprintf(txt, "%s Texto\n ID: %d\n Âncora em: (%.2f, %.2f)\n Posição da Âncora: %c\n Conteúdo: \"%s\"\n Cor de borda: %s\n Cor de preenchimento: %s\n",
-                report_safe,
-                get_id_Forma(f),
-                get_x_texto(t),
-                get_y_texto(t),
-                get_a(t),
-                get_txt(t),
-                get_corb_texto(dados),
-                get_corp_texto(dados));
-
-            if (e != NULL) {
-                fprintf(txt, " Família da fonte: %s\n Peso da fonte: %s\n Tamanho da fonte: %s\n\n",
-                    get_fFamily(e),
-                    get_fWeight(e),
-                    get_fSize(e));
-            } else {
-                fprintf(txt, "\n");
-            }
-            break;
-        }
-
-        default:
-            fprintf(txt, "Tipo de forma desconhecida!\n");
-            break;
-    }
-}
-
-char* get_corb_Forma (FORMA F) {
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-
-    char tipo = ((Forma*)F)->tipo;
-    FORMA geo = ((Forma*)F)->geometrica; 
-
-    if (tipo == 'c') {
-        return get_corb(geo); // de circulo.h
-    }
-    else if (tipo == 'r') {
-        return get_corb(geo); // de retangulo.h
-    }
-    else if (tipo == 'l') {
-        return get_cor_linha(geo); // de linha.h (assumindo que o nome seja este)
-    }
-    else if (tipo == 't') {
-        return get_corb_texto(geo); // de texto.h (assumindo que o nome seja este)
-    }
-    
-    return NULL; // Tipo desconhecido
-}
-
-char* get_corp_Forma (FORMA F) {
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-
-    char tipo = ((Forma*)F)->tipo;
-    FORMA geo = ((Forma*)F)->geometrica; 
-
-    if (tipo == 'c') {
-        return get_corp(geo); // de circulo.h
-    }
-    else if (tipo == 'r') {
-        return get_corp(geo); // de retangulo.h
-    }
-    else if (tipo == 'l') {
-        return NULL; // Linha não tem cor de preenchimento
-    }
-    else if (tipo == 't') {
-        return get_corp_texto(geo); // de texto.h (assumindo que o nome seja este)
-    }
-    
-    return NULL; // Tipo desconhecido
-}
-
-double get_area_Forma (FORMA F) {
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-
-    char tipo = ((Forma*)F)->tipo;
-    FORMA geo = ((Forma*)F)->geometrica; 
-
-    if (tipo == 'c') {
-        return get_area(geo); // de circulo.h
-    }
-    else if (tipo == 'r') {
-        return get_area(geo); // de retangulo.h
-    }
-    else if (tipo == 'l') {
-        return 0.0; // Linha não tem área
-    }
-    else if (tipo == 't') {
-        return 0.0; // Texto não tem área
-    }
-    
-    return 0.0; // Tipo desconhecido
-}
-
-double get_x_Forma(FORMA F){
-
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-
-    if (((Forma*)F)->tipo == 'c') {
-        return get_x_circulo( ((Forma*)F)->geometrica );
-    }
-    else if (((Forma*)F)->tipo == 'r') {
-        return get_x_retangulo( ((Forma*)F)->geometrica ); 
-    }
-    else if (((Forma*)F)->tipo == 'l') {
-        return get_x1_linha (( ((Forma*)F)->geometrica ));
-    }
-    else if (((Forma*)F)->tipo == 't') {
-        return get_x_texto (( ((Forma*)F)->geometrica) );
-    }
-}
-
-double get_y_Forma(FORMA F){
-
-    if (F == NULL) {
-        printf("Erro! A Forma passada por parâmetro não existe. \n");
-        exit (1);
-    }
-
-    if (((Forma*)F)->tipo == 'c') {
-        return get_y_circulo( ((Forma*)F)->geometrica );
-    }
-    else if (((Forma*)F)->tipo == 'r') {
-        return get_y_retangulo( ((Forma*)F)->geometrica ); 
-    }
-    else if (((Forma*)F)->tipo == 'l') {
-        return get_y1_linha (( ((Forma*)F)->geometrica ));
-    }
-    else if (((Forma*)F)->tipo == 't') {
-        return get_y_texto (( ((Forma*)F)->geometrica) );
-    }
-}
-
-void desenhaFormaSvg(FORMA f, FILE *svg) {
-	tipoForma tipo = get_tipo_Forma(f);
+char *getCorbForma(forma *f) {
+	tipoForma tipo = getTipoForma(f);
 	void *dados = getFormaDados(f);
 
 	switch (tipo) {
-		case circulo: {
-			insereCirculo(svg, (CIRCULO)dados); break;
+		case CIRCULO: {
+			return getCorbCirculo(dados);
 		}
 
-		case retangulo: {
-			insereRetangulo(svg, (RETANGULO)dados); break;
+		case RETANGULO: {
+			return getCorbRetangulo(dados);
 		}
 
-		case linha: {
-			insereLinha(svg, (LINHA)dados); break;
+		case LINHA: {
+			return getCorLinha(dados);
 		}
 
-		case texto: {
-			insereTexto(svg, (TEXTO)dados); break;
+		case TEXTO: {
+			return getCorbTexto(dados);
 		}
-
-		default: break;
+		default: {
+			return NULL;
+		}
 	}
 }
+
+char *getCorpForma(forma *f) {
+	if (f == NULL) {
+		return NULL;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			return getCorpCirculo(dados);
+		}
+
+		case RETANGULO: {
+			return getCorpRetangulo(dados);
+		}
+
+		case LINHA: {
+			return getCorLinha(dados);
+		}
+
+		case TEXTO: {
+			return getCorpTexto(dados);
+		}
+		default: {
+			return NULL;
+		}
+	}
+}
+
+void setCorpFormas(forma *f, char *novaCor) {
+	if (f == NULL || novaCor == NULL) {
+		return;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			setCorpCirculo(dados, novaCor); break;
+		}
+
+		case RETANGULO: {
+			setCorpRetangulo(dados, novaCor); break;
+		}
+
+		case LINHA: {
+			setCorLinha(dados, novaCor); break;
+		}
+
+		case TEXTO: {
+			setCorpTexto(dados, novaCor); break;
+		}
+
+		default:
+			break;
+	}
+}
+
+void setCorbFormas(forma *f, char *novaCor) {
+	if (f == NULL || novaCor == NULL) {
+		return;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+	void *dados = getFormaDados(f);
+
+	switch (tipo) {
+		case CIRCULO: {
+			setCorbCirculo(dados, novaCor); break;
+		}
+
+		case RETANGULO: {
+			setCorbRetangulo(dados, novaCor); break;
+		}
+
+		case LINHA: {
+			setCorLinha(dados, novaCor); break;
+		}
+
+		case TEXTO: {
+			setCorbTexto(dados, novaCor); break;
+		}
+		default:
+			break;
+	}
+}
+
+forma *clonarForma(forma *f_original) {
+	if (f_original == NULL) return NULL;
+
+	static int max_id = 10000;
+	int novo_id = ++max_id;
+
+	tipoForma tipo = getTipoForma(f_original);
+	void *dados_orig = getFormaDados(f_original);
+	void *novos_dados = NULL;
+
+	switch (tipo) {
+		case CIRCULO: {
+			circulo *c = (circulo*)dados_orig;
+			novos_dados = criaCirculo(novo_id, getXCirculo(c), getYCirculo(c), getRaioCirculo(c), getCorbCirculo(c), getCorpCirculo(c));
+			break;
+		}
+		case RETANGULO: {
+			retangulo *r = (retangulo*)dados_orig;
+			novos_dados = criaRetangulo(novo_id, getXretangulo(r), getYretangulo(r), getLarguraRetangulo(r), getAlturaRetangulo(r), getCorbRetangulo(r), getCorpRetangulo(r));
+			break;
+		}
+		case LINHA: {
+			linha *l = (linha*)dados_orig;
+			novos_dados = criaLinha(novo_id, getX1Linha(l), getY1Linha(l), getX2Linha(l), getY2Linha(l), getCorLinha(l), getEh_pontilhada(l));
+			break;
+		}
+		case TEXTO: {
+			texto *t = (texto*)dados_orig;
+			estilo *e_orig = getEstiloTexto(t);
+			estilo *novo = criaCopiaEstilo(e_orig);
+			novos_dados = criaTexto(novo_id, getXTexto(t), getYTexto(t), getCorbTexto(t), getCorpTexto(t), getATexto(t), getTxtoTexto(t), novo);
+			break;
+		}
+
+		default:
+			return NULL;
+	}
+
+	if (novos_dados != NULL) {
+		return criaForma(novo_id, tipo, novos_dados);
+	}
+	return NULL;
+}
+
 
 char *getCorComplementar(char *cor_hexa_original) {
     if (cor_hexa_original == NULL) {
@@ -382,139 +268,290 @@ char *getCorComplementar(char *cor_hexa_original) {
     return cor_complementar_hexa;
 }
 
-void setCorpFormas(FORMA *f, char *novaCor) {
-	if (f == NULL || novaCor == NULL) {
+void alterna_cores_forma(forma *f) {
+	if (f == NULL) {
 		return;
 	}
 
-	tipoForma tipo = get_tipo_Forma(f);
-	void *dados = getFormaDados(f);
+	char *cor_borda = getCorbForma(f);
+	char *cor_preenchimento = getCorpForma(f);
 
-	switch (tipo) {
-		case circulo: {
-			set_corp(dados, novaCor); break;
-		}
-
-		case retangulo: {
-			set_corp(dados, novaCor); break;
-		}
-
-		case linha: {
-			set_cor_linha(dados, novaCor); break;
-		}
-
-		case texto: {
-			set_corp_texto(dados, novaCor); break;
-		}
-
-		default:
-			break;
-	}
-}
-
-void setCorbFormas(FORMA *f, char *novaCor) {
-	if (f == NULL || novaCor == NULL) {
+	if (cor_borda == NULL || cor_preenchimento == NULL) {
 		return;
 	}
 
-	tipoForma tipo = get_tipo_Forma(f);
+	char *copia_preenchimento = malloc(strlen(cor_preenchimento) + 1);
+	if (copia_preenchimento == NULL) {
+		fprintf(stderr, "Erro de memoria na funcao alternaCores!\n");
+		return;
+	}
+	strcpy(copia_preenchimento, cor_preenchimento);
+
+	setCorpFormas(f, cor_borda);
+	setCorbFormas(f, copia_preenchimento);
+
+	free(copia_preenchimento);
+}
+
+void alterna_cores_entre_formas(forma *f1, forma *f2) {
+	if (f1 == NULL || f2 == NULL) {
+		return;
+	}
+
+	if (f1 == f2) {
+		alterna_cores_forma(f1);
+		return;
+	}
+
+	char *cor_preenchimento_f1 = getCorpForma(f1);
+	char *cor_borda_f2 = getCorbForma(f2);
+
+	if (cor_preenchimento_f1 == NULL || cor_borda_f2 == NULL) {
+		return;
+	}
+
+	char *copia_preenchimento_f1 = malloc(strlen(cor_preenchimento_f1) + 1);
+	if (copia_preenchimento_f1 == NULL) {
+		fprintf(stderr, "Erro de memoria na funcao trocaCores!\n");
+		return;
+	}
+	strcpy(copia_preenchimento_f1, cor_preenchimento_f1);
+
+	setCorpFormas(f1, cor_borda_f2);
+	setCorbFormas(f2, copia_preenchimento_f1);
+
+	free(copia_preenchimento_f1);
+}
+
+
+double getAreaForma(forma *f) {
+	if (f == NULL) {
+		return 0.0;
+	}
+
+	switch (f -> tipo) {
+		case CIRCULO: return calcAreaCirculo(f -> dados);
+		case RETANGULO: return calcAreaRetangulo(f -> dados);
+		case LINHA: return calcAreaLinha(f -> dados);
+		case TEXTO: return calcAreaTexto(f -> dados);
+	}
+
+	return 0.0;
+}
+
+void destrutorForma(forma *f) {
+	if (f == NULL) {
+		return;
+	}
+
+	void* dados = f -> dados;
+
+	switch (f -> tipo) {
+		case CIRCULO: destrutorCirculo(dados); break;
+		case RETANGULO: destrutorRetangulo(dados); break;
+		case LINHA: destrutorLinha(dados); break;
+		case TEXTO: destrutorTexto(dados); break;
+	}
+
+	f -> dados = NULL;
+	free(f);
+
+}
+
+void setPosicaoForma(forma *f, double x, double y) {
+	if (f == NULL || f -> dados == NULL) {
+		return;
+	}
+
+
+	switch (f -> tipo) {
+		case CIRCULO: {
+			circulo *c = (circulo*) f -> dados;
+			setXCirculo(c, x);
+			setYCirculo(c, y);
+			break;
+		}
+
+		case RETANGULO: {
+			retangulo *r = (retangulo*) f -> dados;
+			setXretangulo(r, x);
+			setYretangulo(r, y);
+			break;
+		}
+
+		case LINHA: {
+			linha *l = (linha*) f -> dados;
+
+			double x1Antigo = getX1Linha(l);
+			double x2Antigo = getX2Linha(l);
+			double y1Antigo = getY1Linha(l);
+			double y2Antigo = getY2Linha(l);
+
+			double dX = x - x1Antigo;
+			double dY = y - y1Antigo;
+
+			setX1Linha(l, x);
+			setY1Linha(l, y);
+			setX2Linha(l, x2Antigo + dX);
+			setY2Linha(l, y2Antigo + dY);
+			break;
+		}
+
+		case TEXTO: {
+			texto *t = (texto*)f-> dados;
+			setXTexto(t, x);
+			setYTexto(t, y);
+			break;
+		}
+
+		default: {
+			printf("Forma inexistente ou sem posicao!\n");
+			break;
+		}
+	}
+}
+
+void desenhaFormaSvg(forma *f, FILE *svg) {
+	tipoForma tipo = getTipoForma(f);
 	void *dados = getFormaDados(f);
 
 	switch (tipo) {
-		case circulo: {
-			set_corb(dados, novaCor); break;
+		case CIRCULO: {
+			insereCirculo(svg, (circulo*)dados); break;
 		}
 
-		case retangulo: {
-			set_corb(dados, novaCor); break;
+		case RETANGULO: {
+			insereRetangulo(svg, (retangulo*)dados); break;
 		}
 
-		case linha: {
-			set_cor_linha(dados, novaCor); break;
+		case LINHA: {
+			insereLinha(svg, (linha*)dados); break;
 		}
 
-		case texto: {
-			set_corb_texto(dados, novaCor); break;
+		case TEXTO: {
+			insereTexto(svg, (texto*)dados); break;
 		}
-		default:
-			break;
+
+		default: break;
 	}
 }
 
-FORMA clonarForma(FORMA f_original) {
-	if (f_original == NULL) return NULL;
+void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY) {
+    tipoForma tipo = getTipoForma(f);
+    void* dados = getFormaDados(f);
 
-	static int max_id = 10000;
-	int novo_id = ++max_id;
+    const char* report_safe = (reportDaFuncaoQRY != NULL) ? reportDaFuncaoQRY : "";
 
-	tipoForma tipo = get_tipo_Forma(f_original);
-	void *dados_orig = getFormaDados(f_original);
-	void *novos_dados = NULL;
+    switch (tipo) {
+        case CIRCULO: {
+            fprintf(txt, "%s\n Círculo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Raio: %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                getIDforma(f),
+                getXCirculo(dados),
+                getYCirculo(dados),
+                getRaioCirculo(dados),
+                getCorbCirculo(dados),
+                getCorpCirculo(dados));
+            break;
+        }
+
+        case RETANGULO: {
+            fprintf(txt, "%s\n Retângulo\n ID: %i\n Âncora em: (%.2lf, %.2lf)\n Largura: %lf\n Altura %lf\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                getIDforma(f),
+                getXretangulo(dados),
+                getYretangulo(dados),
+                getLarguraRetangulo(dados),
+                getAlturaRetangulo(dados),
+                getCorbRetangulo(dados),
+                getCorpRetangulo(dados));
+            break;
+        }
+
+        case LINHA: {
+            fprintf(txt, "%s\n Linha\n ID: %i\n Âncora de início em: (%.2lf, %.2lf)\n Âncora de fim em: (%.2lf, %.2lf)\n Cor: %s\n",
+                report_safe,
+                getIDforma(f),
+                getX1Linha(dados),
+                getY1Linha(dados),
+                getX2Linha(dados),
+                getY2Linha(dados),
+                getCorLinha(dados));
+            break;
+        }
+
+        case TEXTO: {
+            texto* t = (texto*)dados;
+            estilo* e = getEstiloTexto(t);
+
+            fprintf(txt, "%s Texto\n ID: %d\n Âncora em: (%.2f, %.2f)\n Posição da Âncora: %c\n Conteúdo: \"%s\"\n Cor de borda: %s\n Cor de preenchimento: %s\n",
+                report_safe,
+                getIDforma(f),
+                getXTexto(t),
+                getYTexto(t),
+                getATexto(t),
+                getTxtoTexto(t),
+                getCorbTexto(dados),
+                getCorpTexto(dados));
+
+            if (e != NULL) {
+                fprintf(txt, " Família da fonte: %s\n Peso da fonte: %s\n Tamanho da fonte: %s\n\n",
+                    getfFamily(e),
+                    getfWeight(e),
+                    getfSize(e));
+            } else {
+                fprintf(txt, "\n");
+            }
+            break;
+        }
+
+        default:
+            fprintf(txt, "Tipo de forma desconhecida!\n");
+            break;
+    }
+}
+
+double getXForma(forma *f) {
+	if (f == NULL) {
+		return 0.0;
+	}
+
+	tipoForma tipo = getTipoForma(f);
+	void* dados = getFormaDados(f);
 
 	switch (tipo) {
-		case circulo: {
-			CIRCULO c = (CIRCULO)dados_orig;
-			novos_dados = cria_circulo(novo_id, get_x_circulo(c), get_y_circulo(c), get_r(c), get_corb(c), get_corp(c));
-			break;
-		}
-		case retangulo: {
-			RETANGULO r = (RETANGULO)dados_orig;
-			novos_dados = cria_retangulo(novo_id, get_x_retangulo(r), get_y_retangulo(r), get_w(r), get_h(r), get_corb(r), get_corp(r));
-			break;
-		}
-		case linha: {
-			LINHA l = (LINHA)dados_orig;
-			novos_dados = cria_linha (novo_id, get_x1_linha(l), get_y1_linha(l), get_x2_linha(l), get_y2_linha(l), get_cor_linha(l), getEh_pontilhada(l));
-			break;
-		}
-		case texto: {
-			TEXTO t = (TEXTO)dados_orig;
-			ESTILO e_orig = getEstiloTexto(t);
-			ESTILO novo = criaCopiaEstilo(e_orig);
-			novos_dados = criarTexto(novo_id, get_x_texto(t), get_y_texto(t), get_corb_texto(t), get_corp_texto(t), get_a(t), get_txt(t), novo);
-			break;
-		}
-
+		case CIRCULO:
+			return getXCirculo(dados);
+		case RETANGULO:
+			return getXretangulo(dados);
+		case TEXTO:
+			return getXTexto(dados);
+		case LINHA:
+			return getX1Linha(dados);
 		default:
-			return NULL;
+			return 0.0;
 	}
-
-	if (novos_dados != NULL) {
-		return criaForma(novo_id, tipo, novos_dados);
-	}
-	return NULL;
 }
 
+double getYForma(forma *f) {
+	if (f == NULL) {
+		return 0.0;
+	}
 
+	tipoForma tipo = getTipoForma(f);
+	void* dados = getFormaDados(f);
 
-
-
-
-
-
-
-
-void excluir_Forma (FORMA F) {
-    if (F == NULL) {
-        return; 
-    }
-
-    Forma* formaWrapper = (Forma*)F;
-    char tipo = formaWrapper->tipo;
-    FORMA geo = formaWrapper->geometrica; 
-
-    if (tipo == 'c') {
-        excluir_circulo(geo);
-    }
-    else if (tipo == 'r') {
-        excluir_retangulo(geo);
-    }
-    else if (tipo == 'l') {
-        excluir_linha(geo);
-    }
-    else if (tipo == 't') {
-        excluir_texto(geo);
-    }
-
-    free(formaWrapper);
+	switch (tipo) {
+		case CIRCULO:
+			return getYCirculo(dados);
+		case RETANGULO:
+			return getYretangulo(dados);
+		case TEXTO:
+			return getYTexto(dados);
+		case LINHA:
+			return getY1Linha(dados);
+		default:
+			return 0.0;
+	}
 }
+

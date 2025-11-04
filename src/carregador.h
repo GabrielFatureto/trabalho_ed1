@@ -1,55 +1,71 @@
-#ifndef CARREGADOR_H
-#define CARREGADOR_H
-                                                                
-#include "pilha.h"
+#ifndef CARREGADORES_H
+#define CARREGADORES_H
 
-/*
- Arquivo que vai representar os Carregadores de formas que municiam os disparadores.
- Um Carregador vai atuar como uma pilha, estrutura LIFO (Last In, First Out), colocando e retirando elementos do topo
-*/
+#include "forma.h"
+#include "chao.h"
+#include <stdbool.h>
 
-typedef void* CARREGADOR;
+#include "fila.h"
 
-/**
- /// @brief Cria um Carregador vazio.
- /// @return Ponteiro para o novo Carregador. 
+
+/* ------- CARREGADOR -------
+ * Um carregador pode receber como carga qualquer tipo de variável.
+ * Primeiro, deve ser criado com a função 'criaCarregador', após isso
+ * a função 'loadCarregador' pode ser chamada para carregá-lo com o tipo
+ * desejado, 'n' vezes. Funciona sob o sistema LIFO (Last In, First Out).
  */
-CARREGADOR criar_Carregador();
+
+typedef struct stCarregador carregador;
+
+/* ------- FUNÇÃO CONSTRUTORA ------- */
+/// @brief: Função construtora do carregador.
+/// @param i: Identificador do carregador
+/// @return: Retorna um ponteiro para o carregador.
+///
+carregador *criaCarregador(int i);
+
+/* ------- FUNÇÕES ADICIONAIS -------*/
+
+/// @brief: Adiciona uma forma ao carregador
+/// @param l: Ponteiro para o carregador.
+/// @param f: Ponteiro para a forma que será adicionada.
+/// @return: A forma que foi inserida no carregador.
+forma *adicionaFormaCarregador(carregador *l, forma *f);
+
+/// @brief: Adiciona um dado proveniente do chão ao carregador.
+/// @param c: Ponteiro para o carregador.
+/// @param c: Dado que será adicionada ao carregador.
+/// @return: Forma que foi retirada do chão e inserida ao carregador.
+forma *insereDoChaoParaCarregador(carregador *l, chao *c);
+
+/// @brief: Coloca dados da fila, 'n' vezes no carregador desejado.
+/// @param c: Ponteiro para o chão de onde as formas serão adicionadas ao carregador.
+/// @param alvo: Carregador aonde serão colocados os dados.
+/// @param n: Número de vezes que um dado será retirado do chao e inserido no carregador.
+/// @return: Uma fila com as formas inseridas no carregador.
+fila *loadCarregadorN(chao *c, carregador *alvo, int n);
+
+/// @brief: Checa se o carregador está vazio.
+/// @param c: Ponteiro para o carregador.
+/// @return: TRUE se estiver vazio.
+/// @return: FALSE se não estiver vazio.
+bool carregadorEstaVazio(carregador *c);
 
 
+/// @brief: Remove uma forma do carregador
+/// @param c: Ponteiro para o carregador.
+/// @return: Forma que foi removida do carregador.
+forma *removeDoCarregador(carregador *c);
 
-/**
- /// @brief Função que empilha uma forma geométrica no topo do Carregador.
- /// @param Carregador Ponteiro para o Carregador analisado.
- /// @param Forma Ponteiro genérico para a forma que será colocada.
- */
-void push_topo (CARREGADOR c, void *Forma);
+/// @brief: Destrói o carregador.
+/// @param c: Ponteiro para o carregador a ser destruído.
+void destrutorCarregador(carregador **c);
 
-/**
- /// @brief Função que desempilha uma forma geométrica no topo do Carregador.
- /// @param Carregador Ponteiro para o Carregador analisado.
- */
-void* pop_topo (CARREGADOR c);
+/* ------- FUNÇÃO GET: CARREGADOR ------- */
 
-/**
- /// @brief Função para 'pegar' (sem tirar do Carregador) do topo
- /// @param c Ponteiro para o Carregador analisado
- /// @return Ponteiro para a forma que está no topo
- */
-void* get_topo (CARREGADOR c);
+/// @brief: Pega o ID do carregador desejado.
+/// @param c: Carregador onde o ID será pego.
+/// @return: Retorna o ID do carregador desejado.
+int getIDCarregador(carregador *c);
 
-/**
- /// @brief Função que vai mostrar se o Carregador está vazio ou não
- /// @param c Ponteiro para o Carregador analisado
- /// @return Retorna 1 se estiver vazio e 0 se não estiver
- */
-int CarregadorVazio (CARREGADOR c);
-
-/**
- /// @brief Libera a memória associada ao Carregador e aos elementos contidos nele
- /// @param c Ponteiro para o Carregador analisado
- */
-void destruir_carregador (CARREGADOR c);
-
-
-#endif
+#endif //CARREGADORES_H

@@ -1,61 +1,62 @@
 #ifndef PILHA_H
 #define PILHA_H
-
 #include <stdbool.h>
-#include <stddef.h>
 
 
-
-
-typedef void* PILHA;
-
-
-/**
- /// @brief Cria e inicializa uma nova pilha vazia.
- /// @return Um ponteiro para a nova Pilha alocada, ou NULL se a alocação falhar.
+ /* ------- TAD PILHA -------
+ * A Pilha é uma estrutura de dados genérica, que organiza elementos
+ * e opera com os seguintes conceitos:
+ *
+ * Padrão LIFO (Last-In, First-Out): Garante que o último elemento a ser
+ * inserido na pilha será também o primeiro a ser removido, seguindo a
+ * lógica de uma pilha de pratos;
+ *
+ * Dados Genéricos (void*): Armazena ponteiros genéricos ('void*'), permitindo
+ * que a mesma estrutura de pilha seja usada para guardar qualquer tipo de
+ * dado (formas, carregadores, etc.);
+ *
+ * Topo da Pilha: É o único ponto de acesso da estrutura. Novos elementos são
+ * adicionados no topo ('push'), e os elementos também são lidos ('topo') e
+ * removidos ('pop) do topo.
  */
-PILHA pilha_criar();
 
-/**
- /// @brief Adiciona um elemento no topo da pilha (push)
- /// @param p Ponteiro para a Pilha
- /// @param dado Ponteiro para o dado a ser inserido
- /// @return 'true' se a inserção for bem-sucedida, 'false' em caso de falha na alocação
- */
-bool pilha_empilhar(PILHA p, void* dado);
+typedef struct stPilha pilha;
+typedef struct stNodeP node;
 
-/**
- /// @brief Remove e retorna o elemento do topo da pilha (pop)
- /// @param p Ponteiro para a Pilha
- /// @return O ponteiro para o dado removido, ou NULL se a pilha estiver vazia
- */
-void* pilha_desempilhar(PILHA p);
+/// @brief: Cria uma pilha de alocação dinâmica
+/// @return: Retorna um ponteiro para o início da pilha. Retorna NULL caso a alocação da pilha falhe.
+pilha *criaPilha(void);
 
-/**
- /// @brief Retorna o elemento no topo da pilha sem removê-lo (peek/top)
- /// @param p Ponteiro para a Pilha
- /// @return O ponteiro para o dado no topo, ou NULL se a pilha estiver vazia
- */
-void* pilha_topo(PILHA p);
+/// @brief: Insere um elemento no topo da pilha.
+/// @param p: Ponteiro para a struct pilha.
+/// @param item: Ponteiro para o dado que será inserido na pilha.
+void push(pilha *p, void *item);
 
-/**
- /// @brief Retorna o número de elementos na pilha
- /// @param p Ponteiro para a Pilha  
- /// @return O tamanho da pilha
- */
-int pilha_tamanho(PILHA p);
+/// @brief: Remove e retorna o elemento do topo da pilha.
+/// @param p: Ponteiro para a struct pilha.
+/// @return: Retorna o elemento desempilhado. Retorna NULL se a pilha estiver vazia.
+void *pop(pilha *p);
 
-/**
- /// @brief Verifica se a pilha está vazia
- /// @param p Ponteiro para a Pilha  
- /// @return Retorna 'true' se a pilha estiver vazia, 'false' caso contrário
- */
-bool pilha_esta_vazia(PILHA p);
+/// @brief: Retorna o elemento no topo da pilha sem o remover.
+/// @param p: Ponteiro para a struct pilha.
+/// @return: Retorna o elemento que está no topo. Retorna NULL se a pilha estiver vazia.
+void *topo(pilha *p);
 
-/** 
- /// @brief Destroi a pilha e libera a memória alocada
- /// @param p Ponteiro para a Pilha a ser destruída
- */ 
-void destruir_pilha(PILHA p);
+/// @brief: Verifica se a pilha está vazia.
+/// @param p: Ponteiro para a struct pilha.
+/// @return: Retorna TRUE se a pilha estiver vazia, FALSE caso contrário.
+bool estaVaziaPilha(pilha *p);
 
-#endif 
+/// @brief: Libera todos os dados dentro da estrutura.
+/// @param p: Ponteiro para a pilha a ser liberada.
+/// @param destrutor: Ponteiro para uma função que sabe como liberar um item.
+/// Esta função de callback recebe um único parâmetro: um ponteiro
+/// (void *) para o dado a ser destruído.
+void liberaPilha(pilha *p, void (*destrutor)(void *item));
+
+/// @brief: Faz a cópia de uma pilha em outra.
+/// @param principal: Pilha que será copiada.
+/// @param copia: Pilha criada a partir da cópia da principal.
+void copiaPilha(pilha *principal, pilha *copia);
+
+#endif //PILHA_H

@@ -1,5 +1,5 @@
-#include "DISPARADOR.h"
-#include "CARREGADOR.h"
+#include "disparador.h"
+#include "carregador.h"
 #include "forma.h"
 #include "arena.h"
 #include "fila.h"
@@ -8,17 +8,17 @@
 #include <stdlib.h>
 
 
-typedef struct Disparador {
+typedef struct stDisparador {
 	int i;
 	double x, y;
-	Forma *formaEmDisparo;
-	CARREGADOR *esq, *dir;
-} Disparador;
+	forma *formaEmDisparo;
+	carregador *esq, *dir;
+}disparador;
 
-DISPARADOR *criaDisparador(int i, double x, double y, CARREGADOR *esq, CARREGADOR *dir) {
-	DISPARADOR *d = malloc (sizeof(DISPARADOR));
+disparador *criaDisparador(int i, double x, double y, carregador *esq, carregador *dir) {
+	disparador *d = malloc (sizeof(disparador));
 	if (d == NULL) {
-		printf("Erro ao criar o DISPARADOR!\n");
+		printf("Erro ao criar o disparador!\n");
 		return NULL;
 	}
 
@@ -35,11 +35,11 @@ DISPARADOR *criaDisparador(int i, double x, double y, CARREGADOR *esq, CARREGADO
 
 }
 
-int getIDDISPARADOR(DISPARADOR *d) {
+int getIDdisparador(disparador *d) {
 	return d -> i;
 }
 
-void posicionaDisparador(DISPARADOR *d, double x, double y) {
+void posicionaDisparador(disparador *d, double x, double y) {
 	if (d == NULL) {
 		printf("Disparador nulo passado para a função de posicionamento!\n");
 		return;
@@ -50,14 +50,14 @@ void posicionaDisparador(DISPARADOR *d, double x, double y) {
 
 }
 
-void attachDisparador(DISPARADOR *d, CARREGADOR *esq, CARREGADOR *dir) {
+void attachDisparador(disparador *d, carregador *esq, carregador *dir) {
 	if (d == NULL) {
 		printf("Disparador NULL foi passado para a função attachDisparador!\n");
 		return;
 	}
 
 	if (esq == NULL || dir == NULL) {
-		printf("CARREGADOR NULL passado para a funcao attachDisparador!\n");
+		printf("Carregador NULL passado para a funcao attachDisparador!\n");
 		return;
 	}
 
@@ -69,7 +69,7 @@ void attachDisparador(DISPARADOR *d, CARREGADOR *esq, CARREGADOR *dir) {
 
 }
 
-forma* shiftDisparador(DISPARADOR *d, char botao, int n) {
+forma* shiftDisparador(disparador *d, char botao, int n) {
     if (d == NULL || n < 0) {
         return NULL;
     }
@@ -81,16 +81,16 @@ forma* shiftDisparador(DISPARADOR *d, char botao, int n) {
             case 'd': {
 
                 if (forma_anterior != NULL) {
-                    adicionaFormaCARREGADOR(d->dir, forma_anterior);
+                    adicionaFormaCarregador(d->dir, forma_anterior);
                     forma_anterior = NULL;
                 }
 
-                if (CARREGADOREstaVazio(d -> esq)) {
+                if (carregadorEstaVazio(d -> esq)) {
                     d->formaEmDisparo = NULL;
                     return NULL;
                 }
 
-                forma_anterior = removeDoCARREGADOR(d -> esq);
+                forma_anterior = removeDoCarregador(d -> esq);
                 d->formaEmDisparo = forma_anterior;
                 break;
             }
@@ -98,16 +98,16 @@ forma* shiftDisparador(DISPARADOR *d, char botao, int n) {
             case 'e': {
 
                 if (forma_anterior != NULL) {
-                    adicionaFormaCARREGADOR(d->esq, forma_anterior);
+                    adicionaFormaCarregador(d->esq, forma_anterior);
                     forma_anterior = NULL;
                 }
 
-                if (CARREGADOREstaVazio(d -> dir)) {
+                if (carregadorEstaVazio(d -> dir)) {
                     d->formaEmDisparo = NULL;
                     return NULL;
                 }
 
-                forma_anterior = removeDoCARREGADOR(d -> dir);
+                forma_anterior = removeDoCarregador(d -> dir);
                 d->formaEmDisparo = forma_anterior;
                 break;
             }
@@ -123,7 +123,7 @@ forma* shiftDisparador(DISPARADOR *d, char botao, int n) {
 }
 
 
-forma *disparaDisparador(DISPARADOR *d, double dx, double dy) {
+forma *disparaDisparador(disparador *d, double dx, double dy) {
 	if (d == NULL) {
 		printf("Disparador inexistente passado para a função disparaDisparador!\n");
 		return NULL;
@@ -138,11 +138,11 @@ forma *disparaDisparador(DISPARADOR *d, double dx, double dy) {
 	forma *formaDisparada = d -> formaEmDisparo;
 	d -> formaEmDisparo = NULL;
 
-	double x_DISPARADOR = getXDISPARADOR(d);
-	double y_DISPARADOR = getYDISPARADOR(d);
+	double x_disparador = getXdisparador(d);
+	double y_disparador = getYdisparador(d);
 
-	double posicaoFinalX = dx + x_DISPARADOR;
-	double posicaoFinalY = dy + y_DISPARADOR;
+	double posicaoFinalX = dx + x_disparador;
+	double posicaoFinalY = dy + y_disparador;
 
 	setPosicaoForma(formaDisparada, posicaoFinalX, posicaoFinalY);
 
@@ -151,13 +151,13 @@ forma *disparaDisparador(DISPARADOR *d, double dx, double dy) {
 
 }
 
-fila *rajadaDisparador(DISPARADOR *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
+fila *rajadaDisparador(disparador *d, char botao, double dx, double dy, double ix, double iy, arena *a) {
 	if (d == NULL || a == NULL) {
 		return NULL;
 	}
 
-	double x_original = getXDISPARADOR(d);
-	double y_original = getYDISPARADOR(d);
+	double x_original = getXdisparador(d);
+	double y_original = getYdisparador(d);
 
 	fila *fila_disparos = criaFila();
 	int formas_disparadas = 0;
@@ -189,7 +189,7 @@ fila *rajadaDisparador(DISPARADOR *d, char botao, double dx, double dy, double i
 }
 
 
-forma *getFormaEmDisparo(DISPARADOR *d) {
+forma *getFormaEmDisparo(disparador *d) {
 	if (d == NULL || d -> formaEmDisparo == NULL) {
 		return NULL;
 	}
@@ -197,15 +197,15 @@ forma *getFormaEmDisparo(DISPARADOR *d) {
 	return d -> formaEmDisparo;
 }
 
-double getXDISPARADOR(DISPARADOR *d) {
+double getXdisparador(disparador *d) {
 	return d -> x;
 }
 
-double getYDISPARADOR(DISPARADOR *d) {
+double getYdisparador(disparador *d) {
 	return d -> y;
 }
 
-void limpaFormaDoDisparador(DISPARADOR *d, forma *f) {
+void limpaFormaDoDisparador(disparador *d, forma *f) {
 	if (d == NULL || f == NULL) {
 		return;
 	}
@@ -216,11 +216,11 @@ void limpaFormaDoDisparador(DISPARADOR *d, forma *f) {
 }
 
 
-void destrutorDisparador(DISPARADOR **ptr_DISPARADOR) {
-	if (ptr_DISPARADOR == NULL || *ptr_DISPARADOR == NULL) return;
+void destrutorDisparador(disparador **ptr_disparador) {
+	if (ptr_disparador == NULL || *ptr_disparador == NULL) return;
 
-	DISPARADOR* d = *ptr_DISPARADOR;
+	disparador* d = *ptr_disparador;
 
 	free(d);
-	*ptr_DISPARADOR = NULL;
+	*ptr_disparador = NULL;
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
+<g>
+ <circle id="28" cx="256.050153" cy="106.209016" r="9.313620" stroke="#800080" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="29" x1="499.710801" y1="243.727062" x2="513.410280" y2="323.640650" stroke="#454837" stroke-width="1.500000" />
+	<text id="30" x="412.571078" y="465.385688" stroke="#ffff00" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">22</text>
+ <circle id="31" cx="473.852303" cy="387.226606" r="33.008709" stroke="#ffff00" fill="#0088aa" opacity="0.500000" stroke-width="1.500000" />
+	<text id="32" x="65.266858" y="432.981559" stroke="#ccff00" fill="#0088aa" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">1</text>
+	<rect id="33" x="248.790699" y="102.801100" width="59.160707" height="56.561868" stroke="#800080" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="34" cx="63.606079" cy="186.659951" r="29.986021" stroke="#800080" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<text id="35" x="206.710278" y="373.889997" stroke="#454837" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">2222222</text>
+ <circle id="36" cx="36.410665" cy="78.073809" r="11.621547" stroke="#800080" fill="#0088aa" opacity="0.500000" stroke-width="1.500000" />
+	<text id="37" x="433.096449" y="497.007301" stroke="#454837" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">22222222</text>
+	<rect id="38" x="146.359496" y="209.335952" width="66.992428" height="75.376111" stroke="#ffff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<text id="39" x="368.457494" y="352.668199" stroke="#454837" fill="#decd87" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">3333333333</text>
+ <circle id="40" cx="180.216855" cy="355.764350" r="29.262891" stroke="#ffff00" fill="#decd87" opacity="0.500000" stroke-width="1.500000" />
+	<line id="41" x1="465.584686" y1="336.351714" x2="484.574562" y2="390.658480" stroke="#800080" stroke-width="1.500000" />
+	<rect id="42" x="212.225780" y="290.047462" width="59.418706" height="68.223532" stroke="#454837" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="43" x1="457.870720" y1="495.535478" x2="530.272314" y2="543.029292" stroke="#454837" stroke-width="1.500000" />
+	<rect id="44" x="43.504164" y="51.739474" width="16.807263" height="50.755313" stroke="#454837" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="45" cx="479.823097" cy="168.398391" r="7.590410" stroke="#ccff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="46" cx="504.473587" cy="263.133956" r="15.087293" stroke="#800080" fill="#66ff00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="47" cx="372.123932" cy="34.080835" r="16.694787" stroke="#800080" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="48" x1="108.022949" y1="474.491891" x2="158.515755" y2="503.503261" stroke="#800080" stroke-width="1.500000" />
+ <circle id="49" cx="88.065358" cy="123.993624" r="18.979602" stroke="#ccff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<text id="50" x="349.942714" y="478.356190" stroke="#800080" fill="#0088aa" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">1</text>
+	<line id="51" x1="216.450916" y1="304.908447" x2="237.664249" y2="332.601589" stroke="#ffff00" stroke-width="1.500000" />
+ <circle id="52" cx="370.778509" cy="88.396793" r="32.034606" stroke="#ffff00" fill="#decd87" opacity="0.500000" stroke-width="1.500000" />
+	<line id="53" x1="397.164300" y1="382.085919" x2="436.009977" y2="436.578442" stroke="#ccff00" stroke-width="1.500000" />
+	<text id="54" x="474.586663" y="65.662423" stroke="#ccff00" fill="#decd87" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">abaabaabaabaabaabaabaaba</text>
+	<rect id="26" x="197.500000" y="572.500000" width="50.428284" height="56.847165" stroke="#ffff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="25" cx="202.500000" cy="582.500000" r="23.761294" stroke="#ffcc00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<rect id="10001" x="197.500000" y="572.500000" width="50.428284" height="56.847165" stroke="#ffcc00" fill="#ffff00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="24" x1="207.500000" y1="592.500000" x2="241.224137" y2="647.729979" stroke="#800080" stroke-width="1.500000" />
+	<line id="23" x1="212.500000" y1="602.500000" x2="248.109878" y2="680.390428" stroke="#ccff00" stroke-width="1.500000" />
+	<text id="22" x="217.500000" y="612.500000" stroke="#454837" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="start">caxicaxicaxicaxicaxicaxicaxi</text>
+	<line id="21" x1="222.500000" y1="622.500000" x2="292.122046" y2="694.837822" stroke="#800080" stroke-width="1.500000" />
+	<rect id="16" x="197.500000" y="572.500000" width="45.056292" height="75.924987" stroke="#ffff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+ <circle id="14" cx="207.500000" cy="592.500000" r="29.557775" stroke="#ffff00" fill="#66ff00" opacity="0.500000" stroke-width="1.500000" />
+	<line id="13" x1="212.500000" y1="602.500000" x2="232.423952" y2="642.279836" stroke="#800080" stroke-width="1.500000" />
+	<line id="12" x1="217.500000" y1="612.500000" x2="238.423690" y2="697.387948" stroke="#454837" stroke-width="1.500000" />
+	<line id="11" x1="222.500000" y1="622.500000" x2="238.972610" y2="696.845934" stroke="#454837" stroke-width="1.500000" />
+	<line id="10" x1="227.500000" y1="632.500000" x2="250.206340" y2="672.890235" stroke="#800080" stroke-width="1.500000" />
+	<text id="9" x="232.500000" y="642.500000" stroke="#800080" fill="#ffcc00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="middle">catecatecatecatecate</text>
+	<line id="8" x1="237.500000" y1="652.500000" x2="289.769656" y2="731.718367" stroke="#ffff00" stroke-width="1.500000" />
+	<text id="7" x="242.500000" y="662.500000" stroke="#ffff00" fill="#66ff00" font-family="sans" font-weight="n" font-size="12pt" text-anchor="end">catecatecatecatecatecatecate</text>
+	<rect id="6" x="247.500000" y="672.500000" width="33.050365" height="29.453844" stroke="#ccff00" fill="#ffcc00" opacity="0.500000" stroke-width="1.500000" />
+	<rect id="5" x="252.500000" y="682.500000" width="52.542675" height="72.296075" stroke="#454837" fill="#0088aa" opacity="0.500000" stroke-width="1.500000" />
+	<text id="-1" x="227.500000" y="632.500000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+	<text id="-1" x="202.500000" y="582.500000" stroke="red" fill="black" font-family="sans-serif" font-weight="bold" font-size="30pxpt" text-anchor="middle">*</text>
+</g>
+</svg>

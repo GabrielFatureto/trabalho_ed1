@@ -1,170 +1,139 @@
-#ifndef FORMA_H
-#define FORMA_H
-
-#include "texto.h"
-#include "svg.h"
+#ifndef FORMAS_H
+#define FORMAS_H
+#include <stdio.h>
 
 
-typedef void* FORMA;
+/*
+ * ------- TAD FORMAS -------
+ * O TAD Formas provê uma interface genérica para manipular diferentes
+ * tipos de objetos geométricos (círculos, retângulos, etc.) de forma
+ * uniforme. A 'forma' genérica funciona como um container com os
+ * seguintes conceitos:
+ *
+ * Forma Genérica: Um 'invólucro' (wrapper) que representa qualquer objeto
+ * geométrico do programa. Não armazena dados de geometria diretamente, mas
+ * aponta para eles;
+ *
+ * Identificador de Tipo (enum): Uma 'etiqueta' (tag) que identifica qual o
+ * tipo real da forma armazenada, permitindo que
+ * operações específicas sejam aplicadas corretamente;
+ *
+ * Ponteiro de Dados (void*): Um ponteiro genérico que aponta para a estrutura
+ * de dados real e específica da forma, onde os atributos são de fato
+ * armazenados.
+ */
 
+/// Identificador de tipo para as formas.
 typedef enum EnumtipoForma {
-    circulo,
-    retangulo,
-    linha,
-    texto
+    CIRCULO,
+    RETANGULO,
+    LINHA,
+    TEXTO
 } tipoForma;
 
-/**
- /// @brief Cria um wrapper (invólucro) de Forma para um Círculo.
- /// @param tipo Caractere identificador 'c'.
- /// @param id ID numérico do círculo.
- /// @param x Coordenada X do centro.
- /// @param y Coordenada Y do centro.
- /// @param r Raio.
- /// @param corb Cor da borda.
- /// @param corp Cor de preenchimento.
- /// @return Um ponteiro FORMA para o wrapper criado.
- */
-FORMA cria_Forma_circulo (char tipo, int id, double x, double y, double r, char *corb, char *corp);
 
-/**
- /// @brief Cria um wrapper (invólucro) de Forma para um Retângulo.
- /// @param tipo Caractere identificador 'r'.
- /// @param id ID numérico do retângulo.
- /// @param x Coordenada X da âncora.
- /// @param y Coordenada Y da âncora.
- /// @param w Largura.
- /// @param h Altura.
- /// @param corb Cor da borda.
- /// @param corp Cor de preenchimento.
- /// @return Um ponteiro FORMA para o wrapper criado.
- */
-FORMA cria_Forma_retangulo (char tipo, int id, double x, double y, double w, double h, char *corb, char *corp);
+typedef struct stForma forma;
 
-/**
- /// @brief Cria um wrapper (invólucro) de Forma para uma Linha.
- /// @param tipo Caractere identificador 'l'.
- /// @param id ID numérico da linha.
- /// @param x1 Coordenada X do ponto 1.
- /// @param y1 Coordenada Y do ponto 1.
- /// @param x2 Coordenada X do ponto 2.
- /// @param y2 Coordenada Y do ponto 2.
- /// @param cor Cor da linha.
- /// @return Um ponteiro FORMA para o wrapper criado.
- */
-FORMA cria_Forma_linha (char tipo, int id, double x1, double y1, double x2, double y2, char *cor);
+/// @brief: Cria uma fórmula genérica.
+/// @param id: Identificador da forma.
+/// @param tipo: Tipo da forma.
+/// @param dados: Ponteiro para os dados da forma.
+/// @return: Retorna um ponteiro para a forma criada.
+forma *criaForma(int id, tipoForma tipo, void *dados);
 
-/**
- /// @brief Cria um wrapper (invólucro) de Forma para um Texto.
- /// @param tipo Caractere identificador 't'.
- /// @param id ID numérico do texto.
- /// @param x Coordenada X da âncora.
- /// @param y Coordenada Y da âncora.
- /// @param corb Cor da borda (contorno).
- /// @param corp Cor de preenchimento.
- /// @param a Caractere de alinhamento.
- /// @param txto String do texto.
- /// @param ts Estilo do texto (definido em texto.h).
- /// @return Um ponteiro FORMA para o wrapper criado.
- */
-FORMA cria_Forma_texto (TEXTO t);
+/// @brief: Pega e retorna o ID da forma.
+/// @param f: Ponteiro para a forma.
+/// @return: ID da forma.
+int getIDforma(forma *f);
 
+/// @brief: Pega o tipo da forma e o retorna.
+/// @param f: Ponteiro para a forma.
+/// @return: Tipo da forma.
+tipoForma getTipoForma(forma *f);
 
-/// @brief Obtém os dados internos da forma encapsulada.
-/// @param f Ponteiro para a Forma.
-/// @return Retorna um ponteiro para os dados internos da forma.
-void *getFormaDados(FORMA F);
+/// @brief: Pega e retorna os dados da forma.
+/// @param f: Ponteiro para a forma.
+/// @return: Ponteiro para os dados da forma.
+void *getFormaDados(forma *f);
 
-/**
- /// @brief Obtém o caractere que identifica o tipo da forma.
- /// @param F Ponteiro para a Forma.
- /// @return O caractere do tipo ('c', 'r', 'l', 't').
- */
-char get_tipo_Forma (FORMA F);
+/// @brief: Define um novo identificador para a forma.
+/// @param f: Ponteiro para a forma.
+/// @param novoID: Novo identificador.
+void setIDforma(forma *f, int novoID);
 
-/**
- /// @brief Obtém o ID numérico da forma geométrica interna.
- /// @param F Ponteiro para a Forma.
- /// @return O ID (int) da forma.
- */
-int get_id_Forma (FORMA F);
+/// @brief: Pega e retorna a cor de borda de uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @return: Cor de borda da forma genérica.
+char *getCorbForma(forma *f);
 
-/**
- /// @brief Obtém a coordenada X da âncora da forma.
- /// @param F Ponteiro para a Forma.
- /// @return Coordenada X (double).
- */
-double get_x_Forma (FORMA F);
+/// @brief: Pega e retorna a cor de preenchimento de uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @return: Cor de preenchimento de uma forma genérica.
+char *getCorpForma(forma *f);
 
-/**
- /// @brief Obtém a coordenada Y da âncora da forma.
- /// @param F Ponteiro para a Forma.
- /// @return Coordenada Y (double).
- */
-double get_y_Forma (FORMA F);
+/// @brief: Define uma nova cor de preenchimento para uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @param novaCor: Nova cor de preenchimento para a forma genérica.
+void setCorpFormas(forma *f, char *novaCor);
 
-/**
- /// @brief Obtém a cor de borda da forma.
- /// @param F Ponteiro para a Forma.
- /// @return String da cor de borda. (Para Linha, retorna a cor principal).
- */
-char* get_corb_Forma (FORMA F);
+/// @brief: Define uma nova cor de borda para uma forma genérica.
+/// @param f: Ponteiro para a forma.
+/// @param novaCor: Nova cor de borda da forma genérica.
+void setCorbFormas(forma *f, char *novaCor);
 
-/**
- /// @brief Obtém a cor de preenchimento da forma.
- /// @param F Ponteiro para a Forma.
- /// @return String da cor de preenchimento. (Retorna NULL se a forma não tiver, ex: Linha).
- */
-char* get_corp_Forma (FORMA F);
+/// @brief: Clona uma forma, acrescentando 1 ao seu ID.
+/// @param f_original: Forma que será clonada;
+/// @return: Ponteiro para a forma clonada.
+forma *clonarForma(forma *f_original);
 
-/**
- /// @brief Calcula a área da forma.
- /// @param F Ponteiro para a Forma.
- /// @return A área (double). (Retorna 0.0 para formas sem área, como Linha ou Texto).
- */
-double get_area_Forma (FORMA F);
+/// @brief: Calcula a área da forma.
+/// @param f: Ponteiro a forma.
+/// @return: Retorna a área já calculada da área.
+double getAreaForma(forma *f);
 
-/**
- /// @brief Desenha a forma no arquivo SVG fornecido.
- /// @param f Ponteiro para a Forma.
- /// @param svg Arquivo SVG aberto para escrita.
- */
-void desenhaFormaSvg(FORMA f, FILE *svg);
+/// @brief: Libera toda a forma e a destrói.
+/// @param f: Ponteiro para a forma.
+void destrutorForma(forma *f);
 
-/**
- /// @brief Calcula a cor complementar de uma cor hexadecimal.
- /// @param cor_hexa_original String da cor hexadecimal (ex: "#ff5733" ou "ff5733").
- /// @return String alocada dinamicamente com a cor complementar em hexadecimal.
- */
+/// @brief: Define a posição de uma forma genérica.
+/// @param f: Ponteiro para a forma genérica.
+/// @param x: Nova coordenada X.
+/// @param y: Nova coordenada Y.
+void setPosicaoForma(forma *f, double x, double y);
+
+/// @brief: Faz o cálculo para obter a cor complementar de uma cor em hexadecimal.
+/// @param cor_hexa_original: A cor que terá sua cor complementar calculada.
+/// @return: Retorna um ponteiro para a cor complementar em hexadecimal.
 char *getCorComplementar(char *cor_hexa_original);
 
-/**
- /// @brief Define a cor de preenchimento da forma.
- /// @param f Ponteiro para a Forma.
- /// @param novaCor String da nova cor de preenchimento.
- */
-void setCorpFormas(FORMA *f, char *novaCor);
+/// @brief: Troca a cor de preenchimento de f1 com a cor de borda de f2.
+/// @param f1: Ponteiro para a forma 1.
+/// @param f2: Ponteiro para a forma 2;
+void alterna_cores_entre_formas(forma *f1, forma *f2);
 
-/**
- /// @brief Define a cor de borda da forma.
- /// @param f Ponteiro para a Forma.
- /// @param novaCor String da nova cor de borda.
- */
-void setCorbFormas(FORMA *f, char *novaCor);
+/// @brief: Troca a cor de preenchimento da forma com sua cor de borda e vice-versa.
+/// @param f: Ponteiro para a forma.
+void alterna_cores_forma(forma *f);
 
-/**
- /// @brief Clona uma Forma, criando uma cópia independente.
- /// @param f_original Ponteiro para a Forma original.
- /// @return Ponteiro para a nova Forma clonada.
- */
-FORMA *clonarForma(FORMA *f_original);
+/// @brief: Dado o tipo da forma, pega seus dados e a desenha em um arquivo svg.
+/// @param f: Ponteiro para a forma.
+/// @param svg: Ponteiro para o arquivo svg.
+void desenhaFormaSvg(forma *f, FILE *svg);
 
-/**
- /// @brief Libera toda a memória associada à Forma.
- /// Esta função chama o destrutor específico (ex: excluir_circulo)
- /// e depois libera o próprio wrapper da Forma.
- /// @param F Ponteiro para a Forma a ser excluída.
- */
-void excluir_Forma (FORMA F);
+/// @brief: Dado o tipo da forma, pega seus dados e gera um relatório no arquivo txt.
+/// @param f: Ponteiro para a forma.
+/// @param txt: Arquivo .txt aonde as informações serão escritas.
+/// @param reportDaFuncaoQRY: Começo padrão que será adicionado conforme a função do .qry.
+void escreveDadosFormaTxt(forma *f, FILE *txt, char *reportDaFuncaoQRY);
 
-#endif
+/// @brief: Obtém a coordenada X principal (âncora) de uma forma genérica.
+/// @param f: Ponteiro para a forma genérica.
+/// @return: O valor da coordenada X. Retorna 0.0 se a forma for nula ou inválida.
+double getXForma(forma *f);
+
+/// @brief: Obtém a coordenada Y principal (âncora) de uma forma genérica.
+/// @param f: Ponteiro para a forma genérica.
+/// @return: O valor da coordenada Y. Retorna 0.0 se a forma for nula ou inválida.
+double getYForma(forma *f);
+
+#endif //FORMAS_H

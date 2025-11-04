@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 struct stChao {
-    FILA *filaChao;
+    fila *filaChao;
 };
 
 chao *criaChao() {
@@ -14,24 +14,24 @@ chao *criaChao() {
         printf("Erro ao criar o chao!\n");
         return NULL;
     }
-    c->filaChao = fila_criar();
+    c->filaChao = criaFila();
     printf("Chão criado com sucesso!\n");
     return c;
 }
 
 
-void adicionaNoChao(chao *c, FORMA *f) {
+void adicionaNoChao(chao *c, forma *f) {
     if (c == NULL || f == NULL) {
         return;
     }
 
-    fila_enfileirar(c->filaChao, f);
+    enqueue(c->filaChao, f);
 }
 
-FORMA *retiraDoChao(chao *c) {
+forma *retiraDoChao(chao *c) {
     if (c == NULL) return NULL;
 
-    FORMA *removido = fila_desenfileirar(c -> filaChao);
+    forma *removido = dequeue(c -> filaChao);
 
     return removido;
 }
@@ -41,7 +41,7 @@ void destrutorChao(chao *chao) {
 
 
     if (chao -> filaChao != NULL) {
-        destruir_fila(chao -> filaChao);
+        liberaFila(chao -> filaChao, (void (*)(void*)) destrutorForma);
         chao -> filaChao = NULL;
     }
 
@@ -49,12 +49,12 @@ void destrutorChao(chao *chao) {
 }
 
 
-FILA *getFilaDoChao(chao *c) {
+fila *getFilaDoChao(chao *c) {
     if (c == NULL) return NULL;
     return c -> filaChao;
 }
 
 bool chaoEstaVazio(chao *c) {
     if (c == NULL) return true;
-    return fila_esta_vazia(c -> filaChao);
+    return estaVaziaFila(c -> filaChao);
 }

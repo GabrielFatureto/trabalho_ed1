@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 typedef struct stArena {
-    FILA *filaArena;
+    fila *filaArena;
 }arena;
 
 arena *criaArena() {
@@ -18,14 +18,14 @@ arena *criaArena() {
         return NULL;
     }
 
-    a -> filaArena = fila_criar();
+    a -> filaArena = criaFila();
 
     printf("Arena criada com sucesso!\n");
 
     return a;
 }
 
-FORMA *adicionaFormaArena(arena *a, FORMA *f) {
+forma *adicionaFormaArena(arena *a, forma *f) {
     if (f == NULL) {
         return NULL;
     }
@@ -35,15 +35,15 @@ FORMA *adicionaFormaArena(arena *a, FORMA *f) {
         return NULL;
     }
 
-    fila_enfileirar(a -> filaArena, f);
+    enqueue(a -> filaArena, f);
 
     return f;
 }
 
-FORMA *removeFormaArena(arena *a) {
+forma *removeFormaArena(arena *a) {
     if (a == NULL ) return NULL;
 
-    FORMA *removido = fila_desenfileirar(a -> filaArena);
+    forma *removido = dequeue(a -> filaArena);
 
     return removido;
 }
@@ -51,7 +51,7 @@ FORMA *removeFormaArena(arena *a) {
 bool arenaEstaVazia(arena *a) {
     if (a == NULL) return true;
 
-    return fila_esta_vazia(a -> filaArena);
+    return estaVaziaFila(a -> filaArena);
 }
 
 void destrutorArena(arena **a_ptr) {
@@ -60,14 +60,14 @@ void destrutorArena(arena **a_ptr) {
     }
     arena* a = *a_ptr;
 
-    destruir_fila(a -> filaArena);
+    liberaFila(a -> filaArena, NULL);
 
     free(a);
     *a_ptr = NULL;
 }
 
 int getArenaNumFormas(arena *a) {
-    return fila_tamanho(a -> filaArena);
+    return getTamFila(a -> filaArena);
 }
 
 int getTamArena(arena *a) {
@@ -75,72 +75,69 @@ int getTamArena(arena *a) {
         return -1;
     }
 
-    return fila_tamanho(a -> filaArena);
+    return getTamFila(a -> filaArena);
 }
 
-void processaArena(arena *a, chao *c, double *pontuacao_total, FILA *anotacoes_svg,
+
+void processaArena(arena *a, chao *c, double *pontuacao_total, fila *anotacoes_svg,
                    FILE *arquivo_txt, int *formas_clonadas, int *formas_esmagadas, repositorio *repo) {
     if (c == NULL || a == NULL || arquivo_txt == NULL) {
         printf("Erro: Parâmetros nulos passados para processaArena!\n");
         return;
     }
 
-    *pontuacao_total = 0.0;
     double area_esmagada_round = 0.0;
 
-    if (formas_clonadas != NULL) *formas_clonadas = 0;
-    if (formas_esmagadas != NULL) *formas_esmagadas = 0;
-
-        printf("\n=== INICIANDO PROCESSAMENTO DA ARENA ===\n");
+    printf("\n=== INICIANDO PROCESSAMENTO DA ARENA ===\n");
     while (getTamArena(a) >= 2) {
-        FORMA *forma_I = removeFormaArena(a);
-        FORMA *forma_J = removeFormaArena(a);
+        forma *forma_I = removeFormaArena(a);
+        forma *forma_J = removeFormaArena(a);
 
         if (formasSobrepoem(forma_I, forma_J)) {
-
             printf("\nSobreposição detectada!\n");
 
-            double area_I = get_area_Forma(forma_I);
-            double area_J = get_area_Forma(forma_J);
+            double area_I = getAreaForma(forma_I);
+            double area_J = getAreaForma(forma_J);
 
             fprintf(arquivo_txt, "Forma %d (I) vs Forma %d (J). HOUVE SOBREPOSIÇÃO.\n",
-                    get_id_Forma(forma_I), get_id_Forma(forma_J));
+                    getIDforma(forma_I), getIDforma(forma_J));
 
             if (area_I < area_J) {
                 printf("=== I < J ===\n ID = %d (I) (área %.2f) foi esmagada por ID = %d (J) (área %.2f).\n",
-                        get_id_Forma(forma_I), area_I, get_id_Forma(forma_J), area_J);
-                fprintf(arquivo_txt, "<<<-- I < J -->>> FORMA %d (I) (área %.2f) foi esmagada por FORMA %d (J) (área %.2f).\n",
-                        get_id_Forma(forma_I), area_I, get_id_Forma(forma_J), area_J);
+                       getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
+                fprintf(arquivo_txt,
+                        "<<<-- I < J -->>> forma %d (I) (área %.2f) foi esmagada por forma %d (J) (área %.2f).\n",
+                        getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
 
                 if (repo != NULL) {
                     limpaFormaDeTodosDisparadores(repo, forma_I);
                 }
 
-                double x_esmagada = get_x_Forma(forma_I);
-                double y_esmagada = get_y_Forma(forma_I);
+                double x_esmagada = getXForma(forma_I);
+                double y_esmagada = getYForma(forma_I);
 
-                ESTILO *estilo_asterisco = criar_estilo("sans-serif", "bold", "30px");
-                TEXTO* asterisco = criarTexto(-1, x_esmagada, y_esmagada, "red", "black", 'm', "*", estilo_asterisco);
-                excluir_estilo(estilo_asterisco);
-                fila_enfileirar(anotacoes_svg, cria_Forma_texto(asterisco));
+                estilo *estilo_asterisco = criaEstilo("sans-serif", "bold", "30px");
+                texto *asterisco = criaTexto(-1, x_esmagada, y_esmagada, "red", "black", 'm', "*", estilo_asterisco);
+                destroiEstilo(estilo_asterisco);
+                enqueue(anotacoes_svg, criaForma(-1, TEXTO, asterisco));
 
                 *pontuacao_total += area_I;
                 area_esmagada_round += area_I;
                 if (formas_esmagadas != NULL) (*formas_esmagadas)++;
 
-                excluir_Forma(forma_I);
+                destrutorForma(forma_I);
                 adicionaNoChao(c, forma_J);
-            }
-            else if (area_I >= area_J) {
+            } else if (area_I >= area_J) {
                 printf("=== I >= J ===\n ID = %d (I) (área %.2f) modificou a ID = %d (J) (área %.2f).\n\n",
-                    get_id_Forma(forma_I), area_I, get_id_Forma(forma_J), area_J);
-                fprintf(arquivo_txt, "<<<-- I >= J -->>>\n FORMA %d (I) (área %.2f) modificou a FORMA %d (J) (área %.2f).\n\n",
-                        get_id_Forma(forma_I), area_I, get_id_Forma(forma_J), area_J);
+                       getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
+                fprintf(arquivo_txt,
+                        "<<<-- I >= J -->>>\n forma %d (I) (área %.2f) modificou a forma %d (J) (área %.2f).\n\n",
+                        getIDforma(forma_I), area_I, getIDforma(forma_J), area_J);
 
-                FORMA *clone_I = NULL;
+                forma *clone_I = NULL;
 
-                if (get_tipo_Forma(forma_I) == linha) {
-                    char *corLinha = get_cor_linha(getFormaDados(forma_I));
+                if (getTipoForma(forma_I) == LINHA) {
+                    char *corLinha = getCorLinha(getFormaDados(forma_I));
                     char *cor_complementar_linha = getCorComplementar(corLinha);
 
                     setCorbFormas(forma_J, cor_complementar_linha);
@@ -149,7 +146,7 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, FILA *anotacoes_s
 
                     void *dados_clone = getFormaDados(clone_I);
                     if (dados_clone != NULL) {
-                        setCorLinha((LINHA*)dados_clone, cor_complementar_linha);
+                        setCorLinha((linha *) dados_clone, cor_complementar_linha);
                     }
 
                     free(corLinha);
@@ -168,10 +165,9 @@ void processaArena(arena *a, chao *c, double *pontuacao_total, FILA *anotacoes_s
                     adicionaNoChao(c, clone_I);
                 }
             }
-        }
-        else {
+        } else {
             fprintf(arquivo_txt, "Forma %d (I) vs Forma %d (J). NÃO HOUVE SOBREPOSIÇÃO.\n",
-                    get_id_Forma(forma_I), get_id_Forma(forma_J));
+                    getIDforma(forma_I), getIDforma(forma_J));
             adicionaNoChao(c, forma_I);
             adicionaNoChao(c, forma_J);
         }

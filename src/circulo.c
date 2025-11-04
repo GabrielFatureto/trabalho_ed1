@@ -6,14 +6,14 @@
 
 #define pi 3.1415926535897
 
-typedef struct {
+typedef struct Circle{
     int i;
     double x, y, r;
     char *corb, *corp;
-} Circle;
+} circulo;
 
-CIRCULO cria_circulo(int i, double x, double y, double r, char* corb, char* corp){
-    Circle* c = (Circle*)malloc(sizeof(Circle));
+circulo* criaCirculo(int i, double x, double y, double r, char* corb, char* corp){
+    circulo* c = (circulo*)malloc(sizeof(circulo));
     if(c == NULL){
         printf("Erro na alocação de memória!!\n");
         exit(1);
@@ -37,63 +37,63 @@ CIRCULO cria_circulo(int i, double x, double y, double r, char* corb, char* corp
     }
     strcpy(c->corp, corp);
 
-    return (CIRCULO) c;
+    return (circulo*) c;
 }
 
-int get_i(CIRCULO c){
-    return ((Circle*)c)->i;
+int getIDCirculo(circulo* c){
+    return ((circulo*)c)->i;
 }
 
-double get_x_circulo(CIRCULO c){
-    return ((Circle*)c)->x;
+double getXCirculo(circulo* c){
+    return ((circulo*)c)->x;
 }
 
-double get_y_circulo(CIRCULO c){
-    return ((Circle*)c)->y;
+double getYCirculo(circulo* c){
+    return ((circulo*)c)->y;
 }
 
-double get_r(CIRCULO c){
-    return ((Circle*)c)->r;
+double getRaioCirculo(circulo* c){
+    return ((circulo*)c)->r;
 }
 
-double get_area(CIRCULO c){
-    return pi * ((Circle*)c)->r * ((Circle*)c)->r;
+char* getCorbCirculo(circulo* c){
+    return ((circulo*)c)->corb;
 }
 
-char* get_corb(CIRCULO c){
-    return ((Circle*)c)->corb;
+char* getCorpCirculo(circulo* c){
+    return ((circulo*)c)->corp;
 }
 
-char* get_corp(CIRCULO c){
-    return ((Circle*)c)->corp;
+void setIDCirculo (circulo* c, int i){
+    ((circulo*)c)->i = i;
 }
 
-void set_i (CIRCULO c, int i){
-    ((Circle*)c)->i = i;
+void setXCirculo(circulo* c, double x){
+    ((circulo*)c)->x = x;
 }
 
-void set_x_circulo(CIRCULO c, double x){
-    ((Circle*)c)->x = x;
+void setYCirculo(circulo* c, double y){
+    ((circulo*)c)->y = y;
 }
 
-void set_y_circulo(CIRCULO c, double y){
-    ((Circle*)c)->y = y;
+void setRaioCirculo(circulo* c, double r){
+    ((circulo*)c)->r = r;
 }
 
-void set_r(CIRCULO c, double r){
-    ((Circle*)c)->r = r;
+void setCorbCirculo(circulo* c, char* corb){
+    strcpy(((circulo*)c)->corb, corb);
 }
 
-void set_corb(CIRCULO c, char* corb){
-    strcpy(((Circle*)c)->corb, corb);
+void setCorpCirculo(circulo* c, char* corp){
+    strcpy(((circulo*)c)->corp, corp);
 }
 
-void set_corp(CIRCULO c, char* corp){
-    strcpy(((Circle*)c)->corp, corp);
+double calcAreaCirculo(circulo *c) {
+	return pi * ((c -> r) * (c -> r));
 }
 
-void excluir_circulo(CIRCULO c){
-    free(((Circle*)c)->corb);
-    free(((Circle*)c)->corp);
+void destrutorCirculo(circulo* c){
+    free(((circulo*)c)->corb);
+    free(((circulo*)c)->corp);
     free(c);
 }

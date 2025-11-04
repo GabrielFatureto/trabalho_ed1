@@ -1,7 +1,7 @@
 #ifndef circulo_h
 #define circulo_h
 
-typedef void* CIRCULO;
+typedef struct Circle circulo;
 
 /*
  Um Círculo é uma forma geométrica posicionada em um plano bidimensional.
@@ -21,103 +21,103 @@ typedef void* CIRCULO;
  /// @param Corp Cor de preenchimento do círculo
  /// @return Retorna o círculo criado pelos parâmetros informados 
 */
-CIRCULO cria_circulo(int i, double x, double y, double r, char* corb, char* corp);
+circulo* criaCirculo(int i, double x, double y, double r, char* corb, char* corp);
 
 /**
  /// @brief Obtém o identificador da forma 
  /// @param c Ponteiro para a estrutura do círculo
  /// @return Identificador da forma
 */
-int get_i(CIRCULO c);
+int getIDCirculo(circulo* c);
 
 /**
  /// @brief Obtém a coordenada x do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @return Coordenada x do círculo que será criado
  */
-double get_x_circulo(CIRCULO c);
+double getXCirculo(circulo* c);
 
 /** 
  /// @brief Obtém a coordenada y do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @return Coordenada y do círculo que será criado
  */
-double get_y_circulo(CIRCULO c);
+double getYCirculo(circulo* c);
 
 /**
  /// @brief Obtém o raio do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @return Raio do círculo
  */
-double get_r(CIRCULO c);
+double getRaioCirculo(circulo* c);
 
 /**
  /// @brief Obtém a cor da borda do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @return Retorna a cor da borda do círculo
  */
-char* get_corb(CIRCULO c);
+char* getCorbCirculo(circulo* c);
 
 /**
  /// @brief Obtém a cor de preenchimento do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @return Retorna a cor de preenchimento do círculo
  */
-char* get_corp(CIRCULO c);
-
-/**
- /// @brief Calcula a área do círculo
- /// @param c Ponteiro para a estrutura do círculo
- /// @return Retorna a área do círculo
- */
-double get_area(CIRCULO c);
+char* getCorpCirculo(circulo* c);
 
 /**
  /// @brief Define o identificador do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param i Novo identificador
 */
-void set_i (CIRCULO c, int i);
+void setIDCirculo (circulo* c, int i);
 
 /**
  /// @brief Define a coordenada x do centro do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param x Nova coordenada x dentro do círculo
  */ 
-void set_x_circulo(CIRCULO c, double x);
+void setXCirculo(circulo* c, double x);
 
 /**
  /// @brief Define a coordenada y do centro do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param y Nova coordenada y dentro do círculo
  */
-void set_y_circulo(CIRCULO c, double y);
+void setYCirculo(circulo* c, double y);
 
 /**
  /// @brief Define o raio do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param r Novo raio do círculo
  */
-void set_r(CIRCULO c, double r);
+void setRaioCirculo(circulo* c, double r);
 
 /**
  /// @brief Define a cor da borda do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param corb Nova cor para a borda do círculo
  */
-void set_corb(CIRCULO c, char* corb);
+void setCorbCirculo(circulo* c, char* corb);
 
 /**
  /// @brief Define a cor de preenchimento do círculo
  /// @param c Ponteiro para a estrutura do círculo
  /// @param corp Nova cor para o preenchimento do círculo
  */
-void set_corp(CIRCULO c, char* corp);
+void setCorpCirculo(circulo* c, char* corp);
+
+/**
+ /// @brief Calcula a área do círculo
+ /// @param c Ponteiro para a estrutura do círculo
+ /// @return Retorna a área do círculo
+ */
+double calcAreaCirculo(circulo *c);
 
 /**
  /// @brief Libera a memória alocada para a estrutura do círculo
  /// @param c Ponteiro para a estrutura do círculo
  */
-void excluir_circulo(CIRCULO c);
+void destrutorCirculo(circulo* c);
 
 #endif
